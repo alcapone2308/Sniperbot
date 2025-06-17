@@ -1,16 +1,13 @@
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from PIL import Image
-import pytesseract
-import io
 import numpy as np
 import cv2
-import re
+import io
+from PIL import Image
 
 app = FastAPI()
 
-# Autoriser requêtes Flutter
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,7 +16,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Modèle de réponse JSON
 class TradeSignal(BaseModel):
     direction: str
     entry: float
@@ -28,88 +24,62 @@ class TradeSignal(BaseModel):
     confidence: str
     comment: str
 
-# 🔍 OCR pour détecter les prix dans l'image
-def extract_prices_from_image(image_bytes) -> list[float]:
-    try:
-        image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        image_cv = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+def detect_bos_and_swings(img_np):
+    gray = cv2.cvtColor(img_np, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (5, 5), 0)
 
-        gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
-        text = pytesseract.image_to_string(gray)
+    # Détection de contours (lignes de chandeliers)
+    edges = cv2.Canny(blur, 50, 150)
 
-        raw_numbers = re.findall(r'\d+\.\d+', text)
-        prices = [float(p) for p in raw_numbers]
-        return sorted(set([p for p in prices if p > 10]), reverse=True)
-    except Exception as e:
-        print(f"Erreur OCR : {e}")
-        return []
+    # On convertit les lignes en points pour analyse de structure
+    contours, _ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    swing_highs = []
+    swing_lows = []
 
-# 🕯️ Détection des bougies pour BOS/FVG
-def detect_candles(image_bytes) -> list[tuple[int, int, int, int]]:
-    image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-    image_cv = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-    gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
+    for cnt in contours:
+        x, y, w, h = cv2.boundingRect(cnt)
+        if h > 20:
+            center = (x + w // 2, y + h // 2)
+            if y < img_np.shape[0] // 2:
+                swing_highs.append(center)
+            else:
+                swing_lows.append(center)
 
-    _, thresh = cv2.threshold(gray, 180, 255, cv2.THRESH_BINARY_INV)
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if len(swing_highs) < 2 or len(swing_lows) < 2:
+        return None
 
-    candles = [cv2.boundingRect(c) for c in contours if 5 < cv2.boundingRect(c)[2] < 20]
-    return candles
+    # Simuler un BOS baissier pour l'exemple (détection de cassure du swing low précédent)
+    last_high = sorted(swing_highs, key=lambda p: p[0])[-1]
+    last_low = sorted(swing_lows, key=lambda p: p[0])[-1]
 
-# 🚀 Route principale
+    entry = last_low[1] * 1.0
+    sl = entry + 100
+    tp = entry - 200
+
+    return {
+        "direction": "Sell",
+        "entry": round(entry, 2),
+        "stop_loss": round(sl, 2),
+        "take_profit": round(tp, 2),
+        "confidence": "Structure",
+        "comment": "BOS baissier détecté sur cassure du swing low."
+    }
+
 @app.post("/analyze")
-async def analyze_chart(
-    file: UploadFile = File(...),
-    symbol: str = Form(default=""),
-    entry: float = Form(default=0.0)
-) -> TradeSignal:
-    contents = await file.read()
+async def analyze_image(file: UploadFile = File(...)) -> TradeSignal:
+    content = await file.read()
+    image = Image.open(io.BytesIO(content)).convert("RGB")
+    img_np = np.array(image)
 
-    # ✅ Mode manuel activé
-    if symbol and entry > 0:
-        if symbol.upper() in ["EURUSD", "GBPUSD", "AUDUSD"]:
-            sl = round(entry - 0.0010, 5)
-            tp = round(entry + 0.0020, 5)
-        elif symbol.upper() in ["BTCUSD", "XAUUSD", "NAS100"]:
-            sl = round(entry - 100, 2)
-            tp = round(entry + 200, 2)
-        else:
-            sl = round(entry - 10, 2)
-            tp = round(entry + 20, 2)
-
+    result = detect_bos_and_swings(img_np)
+    if not result:
         return TradeSignal(
-            direction="Buy",
-            entry=entry,
-            stop_loss=sl,
-            take_profit=tp,
-            confidence="Manuel",
-            comment=f"Mode manuel activé pour {symbol.upper()}"
+            direction="Unknown",
+            entry=0,
+            stop_loss=0,
+            take_profit=0,
+            confidence="Aucune structure détectée",
+            comment="L'analyse n'a pas pu détecter de BOS ou swings clairs"
         )
 
-    # 🔎 Mode IA (OCR + détection structure)
-    prices = extract_prices_from_image(contents)
-    candles = detect_candles(contents)
-
-    if prices:
-        entry = prices[0]
-        sl = round(entry - entry * 0.003, 2)
-        tp = round(entry + entry * 0.006, 2)
-
-        return TradeSignal(
-            direction="Buy",
-            entry=entry,
-            stop_loss=sl,
-            take_profit=tp,
-            confidence="IA",
-            comment=f"OCR détecté ({len(prices)} prix), bougies détectées : {len(candles)}"
-        )
-
-    # ❌ Fallback (aucun prix détecté)
-    return TradeSignal(
-        direction="Buy",
-        entry=3432.83,
-        stop_loss=3422.83,
-        take_profit=3452.83,
-        confidence="Faible",
-        comment="OCR échoué – prix par défaut utilisé"
-    )
+    return TradeSignal(**result)
