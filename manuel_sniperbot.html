@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>SniperBot - Mode Manuel</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; padding: 40px; text-align: center; }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+    input { width: 200px; }
+    button {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    #result { margin-top: 30px; white-space: pre-wrap; text-align: left; }
+  </style>
+</head>
+<body>
+  <h1>📊 SniperBot - Analyse manuelle</h1>
+
+  <form id="manualForm">
+    <input type="text" id="symbol" placeholder="Ex: EURUSD" required>
+    <input type="number" id="entry" step="0.00001" placeholder="Prix d'entrée" required>
+    <br>
+    <button type="submit">Analyser</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('manualForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const symbol = document.getElementById('symbol').value;
+      const entry = parseFloat(document.getElementById('entry').value);
+      const formData = new FormData();
+
+      // Image factice (l'image est requise par l'API)
+      formData.append('file', new Blob(['dummy'], { type: 'text/plain' }), 'fake.png');
+      formData.append('symbol', symbol);
+      formData.append('entry', entry);
+
+      const response = await fetch('http://10.0.2.2:8000/analyze', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      document.getElementById('result').textContent =
+        `Direction : ${result.direction}\n` +
+        `Entrée (PE) : ${result.entry}\n` +
+        `Stop Loss (SL) : ${result.stop_loss}\n` +
+        `Take Profit (TP) : ${result.take_profit}\n` +
+        `Niveau de confiance : ${result.confidence}\n` +
+        `Commentaire : ${result.comment}`;
+    });
+  </script>
+</body>
+</html>
