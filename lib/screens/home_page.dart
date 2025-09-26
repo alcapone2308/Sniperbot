@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,7 +6,6 @@ import 'exercises_page.dart';
 import 'progression_page.dart';
 import 'glossary_page.dart';
 import 'edit_profile_page.dart';
-import 'trading_bot_page.dart';
 import 'economic_announcements_page.dart';
 import 'prop_firm_info_page.dart';
 import 'leaderboard_page.dart'; // ✅ Import ajouté
@@ -44,6 +42,27 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _showComingSoonDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('SniperBot — Bientôt disponible'),
+        content: const Text(
+          'Merci pour ton intérêt !\n\n'
+              'Le SniperBot sera bientôt disponible sur toutes les plateformes. '
+              'Nous travaillons à son intégration complète avec les achats intégrés officiels (Google & Apple). '
+              'Reviens bientôt pour l’activation !',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +85,7 @@ class _HomePageState extends State<HomePage> {
           SafeArea(
             child: Column(
               children: [
-                const EconomicScrollingBanner(), // ✅ Bannière économique
+                const EconomicScrollingBanner(),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -131,9 +150,9 @@ class _HomePageState extends State<HomePage> {
                         _buildMainButton(Icons.menu_book, 'Modules SMC', const ModulesPage()),
                         _buildMainButton(Icons.bar_chart, 'Exercices', const ExercisesPage()),
                         _buildMainButton(Icons.rocket_launch, 'Progression', const ProgressionPage()),
-                        _buildMainButton(Icons.precision_manufacturing, 'SniperBot – Scanner IA', const TradingBotPage()),
+                        _sniperBotMainButton(), // ✅ Bouton spécial
                         _buildMainButton(Icons.attach_money, 'Annonce Économique', const EconomicAnnouncementsPage()),
-                        _buildMainButton(Icons.leaderboard, 'Classement', const LeaderboardPage()), // ✅ Nouveau bouton
+                        _buildMainButton(Icons.leaderboard, 'Classement', const LeaderboardPage()),
                         const SizedBox(height: 20),
                         Center(
                           child: Text(
@@ -157,7 +176,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildFloatingButton(Icons.menu_book, 'Glossaire SMC', const GlossaryPage()),
-                _buildFloatingButton(Icons.settings, 'Paramètres', const EditProfilePage(), reload: true), // ✅ reload ajouté
+                _buildFloatingButton(Icons.settings, 'Paramètres', const EditProfilePage(), reload: true),
               ],
             ),
           ),
@@ -196,9 +215,9 @@ class _HomePageState extends State<HomePage> {
           _drawerItem(Icons.menu_book, 'Modules SMC', const ModulesPage()),
           _drawerItem(Icons.bar_chart, 'Exercices', const ExercisesPage()),
           _drawerItem(Icons.rocket_launch, 'Progression', const ProgressionPage()),
-          _drawerItem(Icons.precision_manufacturing, 'SniperBot IA', const TradingBotPage()),
+          _sniperBotDrawerItem(), // ✅ Drawer SniperBot
           _drawerItem(Icons.attach_money, 'Annonce Éco', const EconomicAnnouncementsPage()),
-          _drawerItem(Icons.leaderboard, 'Classement', const LeaderboardPage()), // ✅ aussi dans le menu
+          _drawerItem(Icons.leaderboard, 'Classement', const LeaderboardPage()),
           _drawerItem(Icons.menu_book_outlined, 'Glossaire SMC', const GlossaryPage()),
           _drawerItem(Icons.settings, 'Paramètres', const EditProfilePage(), reload: true),
           const Divider(color: Colors.white24),
@@ -225,13 +244,45 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _sniperBotMainButton() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.grey,
+          minimumSize: const Size(double.infinity, 55),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        ),
+        icon: const Icon(Icons.lock_outline, size: 24, color: Colors.white70),
+        label: const Text(
+          'SniperBot (bientôt disponible)',
+          style: TextStyle(fontSize: 18, color: Colors.white70),
+        ),
+        onPressed: () {
+          _showComingSoonDialog();
+        },
+      ),
+    );
+  }
+
+  Widget _sniperBotDrawerItem() {
+    return ListTile(
+      leading: const Icon(Icons.lock_outline, color: Colors.white70),
+      title: const Text('SniperBot IA (bientôt disponible)', style: TextStyle(color: Colors.white70)),
+      subtitle: const Text('Disponible prochainement sur Android et iOS', style: TextStyle(color: Colors.white54, fontSize: 12)),
+      onTap: () {
+        _showComingSoonDialog();
+      },
+    );
+  }
+
   Widget _drawerItem(IconData icon, String label, Widget page, {bool reload = false}) {
     return ListTile(
       leading: Icon(icon, color: Colors.white),
       title: Text(label, style: const TextStyle(color: Colors.white)),
       onTap: () async {
         await Navigator.push(context, MaterialPageRoute(builder: (_) => page));
-        if (reload) _loadUserData(); // 🔥 recharge les infos après retour
+        if (reload) _loadUserData();
       },
     );
   }
@@ -263,7 +314,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black87,
       onPressed: () async {
         await Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
-        if (reload) _loadUserData(); // 🔥 recharge les infos après retour
+        if (reload) _loadUserData();
       },
       icon: Icon(icon, color: Colors.white),
       label: Text(
