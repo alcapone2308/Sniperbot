@@ -1,0 +1,17 @@
+workflows:
+  flutter-app:
+    name: Flutter App Build
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Build Android AppBundle
+        script: flutter build appbundle --release
+      - name: Build iOS App
+        script: flutter build ios --release --no-codesign
+    artifacts:
+      - build/app/outputs/**/*.aab
+      - build/app/outputs/**/*.apk
+      - build/ios/ipa/*.ipa
