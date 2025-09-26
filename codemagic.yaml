@@ -6,7 +6,7 @@ workflows:
       flutter: stable
       xcode: latest
       groups:
-        - New group   # Ton groupe de variables avec Issuer ID, Key ID, API key
+        - New group   # contient tes API keys App Store Connect
     scripts:
       - name: Install dependencies
         script: flutter pub get
@@ -14,6 +14,10 @@ workflows:
         script: flutter build ipa --release --no-tree-shake-icons
     artifacts:
       - build/ios/ipa/*.ipa
+    code_signing:
+      ios:
+        distribution_type: app_store
+        bundle_identifier: "com.snipermarketacademy.app" # Ton Bundle ID exact
     publishing:
       app_store_connect:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY
