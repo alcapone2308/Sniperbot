@@ -6,7 +6,7 @@ workflows:
       flutter: stable
       xcode: latest
       groups:
-        - signing
+        - New group
     scripts:
       - name: Install dependencies
         script: flutter pub get
