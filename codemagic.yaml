@@ -10,8 +10,8 @@ workflows:
     scripts:
       - name: Install dependencies
         script: flutter pub get
-      - name: Build iOS app
-        script: flutter build ios --release --no-codesign
+      - name: Build iOS app (.ipa)
+        script: flutter build ipa --release --no-tree-shake-icons
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
