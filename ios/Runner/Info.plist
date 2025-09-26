@@ -1,11 +1,64 @@
-<key>NSCameraUsageDescription</key>
-<string>Cette app utilise la caméra pour scanner des graphiques.</string>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Cette app utilise la galerie pour importer des images.</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>Cette app peut utiliser le micro si nécessaire.</string>
-<key>NSAppTransportSecurity</key>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
 <dict>
-  <key>NSAllowsArbitraryLoads</key>
-  <true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.snipermarketacademy.app</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Sniper Market Academy</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+
+	<!-- ✅ App capabilities -->
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+
+	<!-- ✅ Orientation support -->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<!-- ✅ Permissions déclarées -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>L’application a besoin d’accéder à la caméra pour scanner des graphiques de trading.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>L’application a besoin d’accéder à ta galerie pour importer des images de graphiques.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Le micro est utilisé uniquement si nécessaire pour certaines fonctions audio (ex. sons d’analyse).</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>L’application peut sauvegarder des images ou résultats d’analyses localement.</string>
 </dict>
+</plist>
