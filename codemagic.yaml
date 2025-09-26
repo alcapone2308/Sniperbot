@@ -1,18 +1,23 @@
 workflows:
-  flutter-app:
-    name: Flutter Android + iOS Build
+  ios-release:
+    name: iOS Release Build (App Store)
     max_build_duration: 60
     environment:
       flutter: stable
       xcode: latest
+      groups:
+        - New group   # Ton groupe de variables avec Issuer ID, Key ID, API key
     scripts:
       - name: Install dependencies
         script: flutter pub get
-      - name: Build Android AppBundle
-        script: flutter build appbundle --release
-      - name: Build iOS App
+      - name: Build iOS app
         script: flutter build ios --release --no-codesign
     artifacts:
-      - build/app/outputs/**/*.aab
-      - build/app/outputs/**/*.apk
       - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: false
+        submit_to_app_store: true
