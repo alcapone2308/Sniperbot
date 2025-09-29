@@ -60,5 +60,9 @@
 	<string>Le micro est utilisé uniquement si nécessaire pour certaines fonctions audio (ex. sons d’analyse).</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>L’application peut sauvegarder des images ou résultats d’analyses localement.</string>
+
+	<!-- ✅ iOS minimum version -->
+	<key>MinimumOSVersion</key>
+	<string>13.0</string>
 </dict>
 </plist>
