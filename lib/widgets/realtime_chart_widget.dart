@@ -16,7 +16,7 @@ class _RealtimeChartWidgetState extends State<RealtimeChartWidget> {
   Timer? _timer;
 
   final String symbol = 'XAUUSDT'; // Binance cote l'or en USDT
-  String interval = '1m'; // intervalle de départ
+  String interval = '1m'; // intervalle par défaut
   final int limit = 30;
 
   @override
@@ -26,7 +26,7 @@ class _RealtimeChartWidgetState extends State<RealtimeChartWidget> {
     _timer = Timer.periodic(const Duration(seconds: 5), (_) => _fetchCandles());
   }
 
-  Future<void>? _fetchCandles() async {
+  Future<void> _fetchCandles() async {
     try {
       final url = Uri.parse(
         'https://api.binance.com/api/v3/klines?symbol=$symbol&interval=$interval&limit=$limit',
@@ -48,11 +48,12 @@ class _RealtimeChartWidgetState extends State<RealtimeChartWidget> {
         }).toList();
 
         setState(() => candles = parsed);
+      } else {
+        debugPrint("Erreur Binance: ${response.body}");
       }
     } catch (e) {
       debugPrint('Erreur chargement Binance bougies : $e');
     }
-    return null;
   }
 
   @override
@@ -63,18 +64,39 @@ class _RealtimeChartWidgetState extends State<RealtimeChartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return candles.isEmpty
-        ? const Center(child: CircularProgressIndicator())
-        : Candlesticks(
-      candles: candles,
-      interval: interval,
-      onIntervalChange: (newInterval) {
-        setState(() {
-          interval = newInterval;
-        });
-        _fetchCandles(); return Future.value();
-      },
+    if (candles.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return Column(
+      children: [
+        // ✅ Sélecteur d’intervalle
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: DropdownButton<String>(
+            value: interval,
+            items: ["1m", "5m", "15m", "1h", "4h", "1d"].map((iv) {
+              return DropdownMenuItem(
+                value: iv,
+                child: Text(iv),
+              );
+            }).toList(),
+            onChanged: (val) {
+              if (val != null) {
+                setState(() => interval = val);
+                _fetchCandles();
+              }
+            },
+          ),
+        ),
+
+        // ✅ Graphique
+        Expanded(
+          child: Candlesticks(
+            candles: candles,
+          ),
+        ),
+      ],
     );
   }
 }
-

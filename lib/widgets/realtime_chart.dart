@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
 
-// ✅ Déclarations globales
+// ✅ Types de lignes (Entry, SL, TP)
 enum TradeLineType { entry, sl, tp }
 
 class TradeLine {
@@ -18,7 +18,6 @@ class RealtimeChart extends StatefulWidget {
   final String symbol; // ex: "BTCUSDT"
   final Function(double)? onPriceUpdate; // callback prix
   final List<TradeLine>? tradeLines; // lignes envoyées par la page
-  // ✅ Paddings pour aligner l’overlay sur la zone prix (sans header/volumes)
   final double chartTopPadding;
   final double chartBottomPadding;
 
@@ -27,8 +26,8 @@ class RealtimeChart extends StatefulWidget {
     required this.symbol,
     this.onPriceUpdate,
     this.tradeLines,
-    this.chartTopPadding = 32,   // ≈ barre intervalle
-    this.chartBottomPadding = 96, // ≈ volumes + axe X
+    this.chartTopPadding = 32,
+    this.chartBottomPadding = 96,
   }) : super(key: key);
 
   @override
@@ -39,10 +38,12 @@ class _RealtimeChartState extends State<RealtimeChart> {
   List<Candle> _candles = [];
   Timer? _timer;
   double? _currentPrice;
+
+  // ✅ Intervalle sélectionné
   String interval = "1m";
   final int limit = 200;
 
-  // ✅ Lignes ajoutées via long press (en plus de widget.tradeLines)
+  // ✅ Lignes ajoutées via long press
   List<TradeLine> _tradeLines = [];
 
   @override
@@ -95,13 +96,12 @@ class _RealtimeChartState extends State<RealtimeChart> {
     }
   }
 
-  // ---- Helpers prix <-> Y (sur la zone UTILISABLE uniquement) ----
+  // ---- Helpers prix <-> Y ----
   double _priceToY(double price, double height) {
     if (_candles.isEmpty) return height / 2;
     final minP = _candles.map((c) => c.low).reduce(min);
     final maxP = _candles.map((c) => c.high).reduce(max);
     if (maxP == minP) return height / 2;
-    // Y = 0 en haut de la zone utilisable
     return (maxP - price) / (maxP - minP) * height;
   }
 
@@ -119,77 +119,92 @@ class _RealtimeChartState extends State<RealtimeChart> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    // ✅ Fusion lignes locales + lignes de la page (Entry/SL/TP)
+    // ✅ Fusion lignes locales + celles reçues du parent
     final List<TradeLine> allLines = [
       ..._tradeLines,
       ...(widget.tradeLines ?? []),
     ];
 
-    return Stack(
+    return Column(
       children: [
-        Candlesticks(
-          candles: _candles,
-          interval: interval,
-          onIntervalChange: (newInterval) {
-            setState(() => interval = newInterval);
-            _fetchCandles();
-            return Future.value();
-          },
+        // Sélecteur d’intervalle
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: DropdownButton<String>(
+            value: interval,
+            items: ["1m", "5m", "15m", "1h", "4h", "1d"].map((iv) {
+              return DropdownMenuItem(
+                value: iv,
+                child: Text(iv),
+              );
+            }).toList(),
+            onChanged: (val) {
+              if (val != null) {
+                setState(() => interval = val);
+                _fetchCandles();
+              }
+            },
+          ),
         ),
 
-        // ✅ Overlay CALÉ sur la zone prix (padding top/bottom)
-        Positioned.fill(
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: widget.chartTopPadding,
-              bottom: widget.chartBottomPadding,
-            ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final usableHeight = constraints.maxHeight;
-
-                return GestureDetector(
-                  // Long press = cycle Entry -> SL -> TP -> Entry...
-                  onLongPressStart: (details) {
-                    final price = _yToPrice(details.localPosition.dy, usableHeight);
-
-                    TradeLineType type;
-                    final hasEntry = _tradeLines.any((l) => l.type == TradeLineType.entry);
-                    final hasSL = _tradeLines.any((l) => l.type == TradeLineType.sl);
-                    final hasTP = _tradeLines.any((l) => l.type == TradeLineType.tp);
-
-                    if (!hasEntry) type = TradeLineType.entry;
-                    else if (!hasSL) type = TradeLineType.sl;
-                    else if (!hasTP) type = TradeLineType.tp;
-                    else type = TradeLineType.entry;
-
-                    setState(() {
-                      _tradeLines.removeWhere((l) => l.type == type);
-                      _tradeLines.add(TradeLine(type: type, price: price));
-                    });
-                  },
-                  // Double tap près d'une ligne -> supprimer
-                  onDoubleTapDown: (details) {
-                    final dy = details.localPosition.dy;
-                    for (int i = 0; i < _tradeLines.length; i++) {
-                      final y = _priceToY(_tradeLines[i].price, usableHeight);
-                      if ((y - dy).abs() < 16) {
-                        setState(() => _tradeLines.removeAt(i));
-                        break;
-                      }
-                    }
-                  },
-                  child: CustomPaint(
-                    size: Size.infinite,
-                    painter: _LinesPainter(
-                      candles: _candles,
-                      tradeLines: allLines,
-                      currentPrice: _currentPrice,
-                    ),
+        // Graphique + overlay
+        Expanded(
+          child: Stack(
+            children: [
+              Candlesticks(
+                candles: _candles,
+              ),
+              Positioned.fill(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: widget.chartTopPadding,
+                    bottom: widget.chartBottomPadding,
                   ),
-                );
-              },
-            ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final usableHeight = constraints.maxHeight;
+                      return GestureDetector(
+                        onLongPressStart: (details) {
+                          final price = _yToPrice(details.localPosition.dy, usableHeight);
+                          TradeLineType type;
+                          final hasEntry = _tradeLines.any((l) => l.type == TradeLineType.entry);
+                          final hasSL = _tradeLines.any((l) => l.type == TradeLineType.sl);
+                          final hasTP = _tradeLines.any((l) => l.type == TradeLineType.tp);
+
+                          if (!hasEntry) type = TradeLineType.entry;
+                          else if (!hasSL) type = TradeLineType.sl;
+                          else if (!hasTP) type = TradeLineType.tp;
+                          else type = TradeLineType.entry;
+
+                          setState(() {
+                            _tradeLines.removeWhere((l) => l.type == type);
+                            _tradeLines.add(TradeLine(type: type, price: price));
+                          });
+                        },
+                        onDoubleTapDown: (details) {
+                          final dy = details.localPosition.dy;
+                          for (int i = 0; i < _tradeLines.length; i++) {
+                            final y = _priceToY(_tradeLines[i].price, usableHeight);
+                            if ((y - dy).abs() < 16) {
+                              setState(() => _tradeLines.removeAt(i));
+                              break;
+                            }
+                          }
+                        },
+                        child: CustomPaint(
+                          size: Size.infinite,
+                          painter: _LinesPainter(
+                            candles: _candles,
+                            tradeLines: allLines,
+                            currentPrice: _currentPrice,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -244,7 +259,6 @@ class _LinesPainter extends CustomPainter {
       tp.paint(canvas, Offset(size.width - tp.width - 8, y - tp.height));
     }
 
-    // ✅ Ligne du prix actuel
     if (currentPrice != null) {
       final y = priceToY(currentPrice!);
       final p = Paint()

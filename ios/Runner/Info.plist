@@ -20,10 +20,6 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 
 	<!-- ✅ App capabilities -->
 	<key>UIRequiredDeviceCapabilities</key>
@@ -31,22 +27,18 @@
 		<string>arm64</string>
 	</array>
 
-	<!-- ✅ Orientation support -->
+	<!-- ✅ Orientation support (portrait only) -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 
-	<!-- ✅ Permissions déclarées -->
+	<!-- ✅ Permissions -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -57,7 +49,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>L’application a besoin d’accéder à ta galerie pour importer des images de graphiques.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Le micro est utilisé uniquement si nécessaire pour certaines fonctions audio (ex. sons d’analyse).</string>
+	<string>Le micro est utilisé uniquement si nécessaire pour certaines fonctions audio.</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>L’application peut sauvegarder des images ou résultats d’analyses localement.</string>
 
