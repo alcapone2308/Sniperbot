@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: ^1.2.0   # ✅ Correctement placé ici
+  image_picker: ^1.2.0   # ✅ Bien placé
 
   # Firebase
   firebase_core: ^4.1.1
@@ -43,7 +43,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^6.0.0
+  flutter_lints: ^5.0.0   # ✅ Compatible avec Dart 3.5.1
   flutter_launcher_icons: ^0.14.4
 
 flutter_native_splash:
