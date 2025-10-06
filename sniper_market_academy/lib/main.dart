@@ -65,12 +65,14 @@ Future<void> main() async {
 
   // ✅ Initialisation des providers
 
-  // ✅ Initialisation TradeProvider
   final tradeProvider = TradeProvider();
   await tradeProvider.loadTrade();
-
-  // ✅ Enregistrer automatiquement le joueur dans le classement
-  await registerUserInLeaderboard();
+  
+  final walletProvider = WalletProvider();
+  await walletProvider.loadWallet();
+  
+  final quizProvider = QuizProvider();
+  await quizProvider.loadProgress();
 
   runApp(
     MultiProvider(
