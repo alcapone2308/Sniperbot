@@ -53,7 +53,7 @@ Future<void> main() async {
 
   final prefs = await SharedPreferences.getInstance();
 
-  // ✅ Expiration automatique de l’abonnement
+  // ✅ Initialiser le portefeuille virtuel si première utilisation
   final walletBox = Hive.box('wallet_data');
   if (!walletBox.containsKey('balance')) {
     await walletBox.put('balance', 10000.0); // 10,000$ de départ
