@@ -454,6 +454,10 @@ async def get_transactions(user_id: str):
 async def get_lessons():
     """Get all lessons"""
     lessons = await db.lessons.find().sort("order", 1).to_list(100)
+    # Remove MongoDB _id field
+    for lesson in lessons:
+        if "_id" in lesson:
+            del lesson["_id"]
     return {"lessons": lessons}
 
 @api_router.get("/lessons/{lesson_id}")
