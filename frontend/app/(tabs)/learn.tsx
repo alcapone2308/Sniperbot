@@ -27,7 +27,7 @@ export default function LearnScreen() {
     try {
       const [lessonsRes, progressRes] = await Promise.all([
         learningAPI.getLessons(),
-        learningAPI.getProgress(user?.id || ''),
+        progressAPI.getProgress(user?.id || ''),
       ]);
       setLessons(lessonsRes.data.lessons || []);
       setProgress(progressRes.data);
