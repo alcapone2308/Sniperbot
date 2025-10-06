@@ -607,6 +607,11 @@ async def get_user_progress(user_id: str):
     if not progress:
         progress = UserProgress(user_id=user_id)
         await db.user_progress.insert_one(progress.dict())
+        progress = progress.dict()
+    else:
+        # Remove MongoDB _id field
+        if "_id" in progress:
+            del progress["_id"]
     return progress
 
 # Include router
