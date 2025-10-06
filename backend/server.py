@@ -499,6 +499,10 @@ async def complete_lesson(lesson_id: str, user_id: str):
 async def get_lesson_quizzes(lesson_id: str):
     """Get quizzes for a lesson"""
     quizzes = await db.quizzes.find({"lesson_id": lesson_id}).to_list(100)
+    # Remove MongoDB _id field
+    for quiz in quizzes:
+        if "_id" in quiz:
+            del quiz["_id"]
     return {"quizzes": quizzes}
 
 @api_router.post("/quizzes/submit")
