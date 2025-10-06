@@ -43,7 +43,13 @@ import 'services/leaderboard_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // ✅ Initialisation Firebase
+  
+  // ✅ Initialiser Hive (offline storage)
+  await Hive.initFlutter();
+  await Hive.openBox('user_data');
+  await Hive.openBox('wallet_data');
+  await Hive.openBox('quiz_data');
+  await Hive.openBox('trades_data');
 
   final prefs = await SharedPreferences.getInstance();
 
