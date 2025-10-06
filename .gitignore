@@ -84,3 +84,7 @@ sniper_academy.bundle
 # Environment files
 *.env
 *.env.*
+-e 
+# Environment files
+*.env
+*.env.*
