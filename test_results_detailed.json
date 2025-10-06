@@ -1,0 +1,315 @@
+{
+  "authentication": [
+    {
+      "test": "Create New User",
+      "success": true,
+      "details": "User created successfully with ID: c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+      "timestamp": "2025-10-06T18:30:23.645115",
+      "response_data": {
+        "id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+        "email": "trader_586c5c79@tradeplay.com",
+        "name": "Jean Dupont",
+        "avatar": "https://example.com/avatar.jpg",
+        "level": 1,
+        "xp": 0,
+        "virtual_balance": 10000.0,
+        "total_profit": 0.0,
+        "created_at": "2025-10-06T18:30:23.640720"
+      }
+    },
+    {
+      "test": "Login Existing User",
+      "success": true,
+      "details": "Existing user login successful",
+      "timestamp": "2025-10-06T18:30:23.656126"
+    },
+    {
+      "test": "Get User Info",
+      "success": true,
+      "details": "User info retrieved: Jean Dupont",
+      "timestamp": "2025-10-06T18:30:23.704998",
+      "response_data": {
+        "id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+        "email": "trader_586c5c79@tradeplay.com",
+        "name": "Jean Dupont",
+        "avatar": "https://example.com/avatar.jpg",
+        "level": 1,
+        "xp": 0,
+        "virtual_balance": 10000.0,
+        "total_profit": 0.0,
+        "created_at": "2025-10-06T18:30:23.640000"
+      }
+    },
+    {
+      "test": "Get Non-existent User",
+      "success": true,
+      "details": "Correctly returned 404 for non-existent user",
+      "timestamp": "2025-10-06T18:30:23.712496"
+    }
+  ],
+  "market_data": [
+    {
+      "test": "Get Crypto Prices",
+      "success": true,
+      "details": "Retrieved 1 crypto prices",
+      "timestamp": "2025-10-06T18:30:23.913150",
+      "response_data": [
+        {
+          "symbol": "STATUS",
+          "name": "Status",
+          "price": 0,
+          "change_24h": 0,
+          "type": "crypto"
+        }
+      ]
+    },
+    {
+      "test": "Get Economic News",
+      "success": true,
+      "details": "Retrieved 5 news articles",
+      "timestamp": "2025-10-06T18:30:23.923173",
+      "response_data": [
+        {
+          "id": "1",
+          "title": "Bitcoin atteint un nouveau sommet historique",
+          "source": "Crypto Daily",
+          "timestamp": "2025-10-06T18:30:23.920131"
+        },
+        {
+          "id": "2",
+          "title": "Les march\u00e9s europ\u00e9ens en hausse apr\u00e8s annonce de la BCE",
+          "source": "Financial Times",
+          "timestamp": "2025-10-06T18:30:23.920136"
+        }
+      ]
+    }
+  ],
+  "trading": [
+    {
+      "test": "Buy Crypto",
+      "success": true,
+      "details": "Crypto purchase executed successfully",
+      "timestamp": "2025-10-06T18:30:23.935810",
+      "response_data": {
+        "success": true,
+        "message": "Trade executed successfully"
+      }
+    },
+    {
+      "test": "Get Portfolio",
+      "success": true,
+      "details": "Portfolio retrieved with 1 positions",
+      "timestamp": "2025-10-06T18:30:23.984302",
+      "response_data": [
+        {
+          "id": "d8d69090-68f8-4428-b088-bf59a45dd905",
+          "user_id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+          "symbol": "BTC",
+          "asset_type": "crypto",
+          "quantity": 0.1,
+          "buy_price": 45000.0,
+          "current_price": 0.0,
+          "total_value": 0.0,
+          "profit_loss": 0.0,
+          "profit_loss_percent": 0.0,
+          "created_at": "2025-10-06T18:30:23.931000"
+        }
+      ]
+    },
+    {
+      "test": "Sell Crypto",
+      "success": true,
+      "details": "Crypto sale executed successfully",
+      "timestamp": "2025-10-06T18:30:24.035288",
+      "response_data": {
+        "success": true,
+        "message": "Trade executed successfully"
+      }
+    },
+    {
+      "test": "Get Transaction History",
+      "success": true,
+      "details": "Retrieved 2 transactions",
+      "timestamp": "2025-10-06T18:30:24.084164",
+      "response_data": [
+        {
+          "id": "8c430008-0caf-41fe-ae32-fffc15f0dc93",
+          "user_id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+          "symbol": "BTC",
+          "asset_type": "crypto",
+          "transaction_type": "sell",
+          "quantity": 0.05,
+          "price": 46000.0,
+          "total": 2300.0,
+          "timestamp": "2025-10-06T18:30:23.990000"
+        },
+        {
+          "id": "4c99b689-2215-4f1f-8e60-baf5652338b0",
+          "user_id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+          "symbol": "BTC",
+          "asset_type": "crypto",
+          "transaction_type": "buy",
+          "quantity": 0.1,
+          "price": 45000.0,
+          "total": 4500.0,
+          "timestamp": "2025-10-06T18:30:23.932000"
+        }
+      ]
+    },
+    {
+      "test": "Invalid Trade - Insufficient Balance",
+      "success": true,
+      "details": "Correctly rejected trade with insufficient balance",
+      "timestamp": "2025-10-06T18:30:24.096849"
+    }
+  ],
+  "learning": [
+    {
+      "test": "Get All Lessons",
+      "success": true,
+      "details": "Retrieved 5 lessons",
+      "timestamp": "2025-10-06T18:30:24.104464",
+      "response_data": [
+        {
+          "id": "c337388e-292f-4573-8498-4e4ca8ea866a",
+          "title": "Introduction au Trading",
+          "description": "Apprenez les bases du trading et les concepts fondamentaux",
+          "content": "Le trading est l'achat et la vente d'actifs financiers dans le but de r\u00e9aliser un profit. Les actifs peuvent inclure des actions, des cryptomonnaies, des devises (forex) et plus encore.",
+          "difficulty": "beginner",
+          "category": "general",
+          "order": 1,
+          "xp_reward": 50
+        },
+        {
+          "id": "b0c52a85-0f4e-45bf-900b-b7e54d52a298",
+          "title": "Comprendre les Cryptomonnaies",
+          "description": "D\u00e9couvrez le monde des cryptomonnaies et de la blockchain",
+          "content": "Les cryptomonnaies sont des monnaies num\u00e9riques d\u00e9centralis\u00e9es bas\u00e9es sur la technologie blockchain. Bitcoin a \u00e9t\u00e9 la premi\u00e8re cryptomonnaie cr\u00e9\u00e9e en 2009.",
+          "difficulty": "beginner",
+          "category": "crypto",
+          "order": 2,
+          "xp_reward": 50
+        }
+      ]
+    },
+    {
+      "test": "Get Lesson Details",
+      "success": false,
+      "details": "Failed with status 500",
+      "timestamp": "2025-10-06T18:30:24.114675"
+    },
+    {
+      "test": "Complete Lesson",
+      "success": true,
+      "details": "Lesson completed, XP earned: 50",
+      "timestamp": "2025-10-06T18:30:24.167037",
+      "response_data": {
+        "success": true,
+        "xp_earned": 50
+      }
+    },
+    {
+      "test": "Get Lesson Quizzes",
+      "success": true,
+      "details": "Retrieved 1 quizzes",
+      "timestamp": "2025-10-06T18:30:24.215125",
+      "response_data": [
+        {
+          "id": "2823e849-1fe0-44e7-958d-1deb21de09a7",
+          "lesson_id": "c337388e-292f-4573-8498-4e4ca8ea866a",
+          "question": "Qu'est-ce que le trading ?",
+          "options": [
+            "L'achat et la vente d'actifs financiers",
+            "Un jeu vid\u00e9o",
+            "Une application mobile",
+            "Un r\u00e9seau social"
+          ],
+          "correct_answer": 0,
+          "explanation": "Le trading est l'achat et la vente d'actifs financiers pour r\u00e9aliser des profits.",
+          "xp_reward": 25
+        }
+      ]
+    },
+    {
+      "test": "Submit Quiz Answer",
+      "success": true,
+      "details": "Quiz submitted, correct: True, XP: 25",
+      "timestamp": "2025-10-06T18:30:24.224375",
+      "response_data": {
+        "correct": true,
+        "explanation": "Le trading est l'achat et la vente d'actifs financiers pour r\u00e9aliser des profits.",
+        "xp_earned": 25
+      }
+    }
+  ],
+  "challenges_leaderboard": [
+    {
+      "test": "Get Daily Challenges",
+      "success": true,
+      "details": "Retrieved 1 daily challenges",
+      "timestamp": "2025-10-06T18:30:24.272493",
+      "response_data": [
+        {
+          "id": "7ac3814c-c5d2-4647-83b0-8a7da74a14cc",
+          "title": "D\u00e9fi Quotidien : Premi\u00e8re Transaction",
+          "description": "Effectuez votre premi\u00e8re transaction du jour",
+          "challenge_type": "daily_trade",
+          "target_value": 1.0,
+          "xp_reward": 100,
+          "date": "2025-10-06"
+        }
+      ]
+    },
+    {
+      "test": "Get Leaderboard",
+      "success": true,
+      "details": "Retrieved leaderboard with 4 users",
+      "timestamp": "2025-10-06T18:30:24.281441",
+      "response_data": [
+        {
+          "rank": 1,
+          "name": "Jean Dupont",
+          "avatar": "https://example.com/avatar.jpg",
+          "level": 1,
+          "total_profit": 50.0,
+          "xp": 95
+        },
+        {
+          "rank": 2,
+          "name": "Test User",
+          "avatar": null,
+          "level": 1,
+          "total_profit": 0.0,
+          "xp": 0
+        },
+        {
+          "rank": 3,
+          "name": "Jean Dupont",
+          "avatar": null,
+          "level": 1,
+          "total_profit": 0.0,
+          "xp": 0
+        }
+      ]
+    }
+  ],
+  "ai_assistant": [
+    {
+      "test": "AI Assistant Query",
+      "success": true,
+      "details": "AI responded with 2618 characters",
+      "timestamp": "2025-10-06T18:30:30.896871",
+      "response_data": {
+        "response_preview": "Bien s\u00fbr ! Commen\u00e7ons par le d\u00e9but.\n\n### Qu'est-ce que le Bitcoin ?\n\nLe Bitcoin est une **cryptomonn"
+      }
+    }
+  ],
+  "progress": [
+    {
+      "test": "Get User Progress",
+      "success": false,
+      "details": "Failed with status 500",
+      "timestamp": "2025-10-06T18:30:30.905323"
+    }
+  ]
+}
