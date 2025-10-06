@@ -78,6 +78,8 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => tradeProvider),
+        ChangeNotifierProvider(create: (_) => walletProvider),
+        ChangeNotifierProvider(create: (_) => quizProvider),
       ],
       child: const MyApp(),
     ),
