@@ -474,6 +474,9 @@ async def get_lesson(lesson_id: str):
     lesson = await db.lessons.find_one({"id": lesson_id})
     if not lesson:
         raise HTTPException(status_code=404, detail="Lesson not found")
+    # Remove MongoDB _id field
+    if "_id" in lesson:
+        del lesson["_id"]
     return lesson
 
 @api_router.post("/lessons/{lesson_id}/complete")
