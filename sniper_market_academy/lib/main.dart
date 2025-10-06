@@ -63,16 +63,7 @@ Future<void> main() async {
     print("💰 Portefeuille initialisé avec 10,000\$");
   }
 
-  if (isSubscribed && abonnementDateStr != null) {
-    final abonnementDate = DateTime.tryParse(abonnementDateStr);
-    final expiration = abonnementDate?.add(const Duration(days: 30));
-    if (expiration != null && DateTime.now().isAfter(expiration)) {
-      await prefs.setBool('sniperbot_abonnement_actif', false);
-      await prefs.setInt('upload_count', 0);
-      await prefs.remove('abonnement_date');
-      print("🔒 Abonnement expiré automatiquement désactivé");
-    }
-  }
+  // ✅ Initialisation des providers
 
   // ✅ Initialisation TradeProvider
   final tradeProvider = TradeProvider();
