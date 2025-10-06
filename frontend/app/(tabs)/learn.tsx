@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { learningAPI } from '../../services/api';
+import { learningAPI, progressAPI } from '../../services/api';
 import { useAuthStore } from '../../store/authStore';
 
 export default function LearnScreen() {
