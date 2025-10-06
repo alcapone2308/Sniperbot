@@ -54,8 +54,14 @@ Future<void> main() async {
   final prefs = await SharedPreferences.getInstance();
 
   // ✅ Expiration automatique de l’abonnement
-  final isSubscribed = prefs.getBool('sniperbot_abonnement_actif') ?? false;
-  final abonnementDateStr = prefs.getString('abonnement_date');
+  final walletBox = Hive.box('wallet_data');
+  if (!walletBox.containsKey('balance')) {
+    await walletBox.put('balance', 10000.0); // 10,000$ de départ
+    await walletBox.put('total_profit', 0.0);
+    await walletBox.put('best_trade', 0.0);
+    await walletBox.put('trades_count', 0);
+    print("💰 Portefeuille initialisé avec 10,000\$");
+  }
 
   if (isSubscribed && abonnementDateStr != null) {
     final abonnementDate = DateTime.tryParse(abonnementDateStr);
