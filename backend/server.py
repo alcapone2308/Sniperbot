@@ -442,6 +442,10 @@ async def execute_trade(trade: TradeRequest):
 async def get_portfolio(user_id: str):
     """Get user's portfolio"""
     positions = await db.positions.find({"user_id": user_id}).to_list(100)
+    # Remove MongoDB _id field
+    for position in positions:
+        if "_id" in position:
+            del position["_id"]
     return {"positions": positions}
 
 @api_router.get("/transactions/{user_id}")
