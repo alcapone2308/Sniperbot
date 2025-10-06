@@ -1,0 +1,57 @@
+diff --git a/backend/server.py b/backend/server.py
+index 6a29bad..e66aa8f 100644
+--- a/backend/server.py
++++ b/backend/server.py
+@@ -442,18 +442,30 @@ async def execute_trade(trade: TradeRequest):
+ async def get_portfolio(user_id: str):
+     """Get user's portfolio"""
+     positions = await db.positions.find({"user_id": user_id}).to_list(100)
++    # Remove MongoDB _id field
++    for position in positions:
++        if "_id" in position:
++            del position["_id"]
+     return {"positions": positions}
+ 
+ @api_router.get("/transactions/{user_id}")
+ async def get_transactions(user_id: str):
+     """Get user's transaction history"""
+     transactions = await db.transactions.find({"user_id": user_id}).sort("timestamp", -1).to_list(100)
++    # Remove MongoDB _id field
++    for transaction in transactions:
++        if "_id" in transaction:
++            del transaction["_id"]
+     return {"transactions": transactions}
+ 
+ @api_router.get("/lessons")
+ async def get_lessons():
+     """Get all lessons"""
+     lessons = await db.lessons.find().sort("order", 1).to_list(100)
++    # Remove MongoDB _id field
++    for lesson in lessons:
++        if "_id" in lesson:
++            del lesson["_id"]
+     return {"lessons": lessons}
+ 
+ @api_router.get("/lessons/{lesson_id}")
+@@ -495,6 +507,10 @@ async def complete_lesson(lesson_id: str, user_id: str):
+ async def get_lesson_quizzes(lesson_id: str):
+     """Get quizzes for a lesson"""
+     quizzes = await db.quizzes.find({"lesson_id": lesson_id}).to_list(100)
++    # Remove MongoDB _id field
++    for quiz in quizzes:
++        if "_id" in quiz:
++            del quiz["_id"]
+     return {"quizzes": quizzes}
+ 
+ @api_router.post("/quizzes/submit")
+@@ -532,6 +548,10 @@ async def get_daily_challenges():
+     """Get today's challenges"""
+     today = datetime.utcnow().strftime("%Y-%m-%d")
+     challenges = await db.challenges.find({"date": today}).to_list(100)
++    # Remove MongoDB _id field
++    for challenge in challenges:
++        if "_id" in challenge:
++            del challenge["_id"]
+     return {"challenges": challenges}
+ 
+ @api_router.get("/leaderboard")
