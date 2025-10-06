@@ -80,3 +80,7 @@ agenthub/agents/youtube/db
 android-sdk/ sniper_market_academy_enhanced.zip
 sniper_market_academy_enhanced.zip
 sniper_academy.bundle
+-e 
+# Environment files
+*.env
+*.env.*
