@@ -5,6 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 // ✅ Providers
 import 'providers/trade_provider.dart';
+import 'providers/wallet_provider.dart';
+import 'providers/quiz_provider.dart';
 
 // ✅ Exercices
 import 'exercises/bos_exercise.dart';
