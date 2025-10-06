@@ -126,8 +126,22 @@ async def initialize_data():
             {
                 "id": str(uuid.uuid4()),
                 "title": "Introduction au Trading",
-                "description": "Apprenez les bases du trading et les concepts fondamentaux",
-                "content": "Le trading est l'achat et la vente d'actifs financiers dans le but de réaliser un profit. Les actifs peuvent inclure des actions, des cryptomonnaies, des devises (forex) et plus encore.",
+                "description": "Découvrez les fondamentaux du trading et l'importance de la psychologie",
+                "content": """Le trading est l'art d'acheter et de vendre des actifs financiers dans le but de réaliser un profit.
+
+📊 Les Types d'Actifs
+• Actions : Parts de propriété d'une entreprise
+• Cryptomonnaies : Monnaies numériques décentralisées (Bitcoin, Ethereum)
+• Forex : Marché des devises (EUR/USD, GBP/USD)
+• Matières premières : Or, pétrole, argent
+
+💡 Principes Fondamentaux
+1. Achetez bas, vendez haut : Le principe de base de tout trading
+2. Gestion du risque : Ne risquez jamais plus de 1-2% de votre capital
+3. Patience et discipline : Les émotions sont l'ennemi du trader
+4. Formation continue : Les marchés évoluent constamment
+
+🎯 Votre Objectif : Devenir un trader consistant et rentable sur le long terme !""",
                 "difficulty": "beginner",
                 "category": "general",
                 "order": 1,
@@ -135,43 +149,301 @@ async def initialize_data():
             },
             {
                 "id": str(uuid.uuid4()),
-                "title": "Comprendre les Cryptomonnaies",
-                "description": "Découvrez le monde des cryptomonnaies et de la blockchain",
-                "content": "Les cryptomonnaies sont des monnaies numériques décentralisées basées sur la technologie blockchain. Bitcoin a été la première cryptomonnaie créée en 2009.",
+                "title": "Les Chandelles Japonaises",
+                "description": "Apprenez à lire les bougies, l'outil principal de tout trader",
+                "content": """Les chandelles japonaises sont la représentation graphique des mouvements de prix.
+
+🕯️ Anatomie d'une Bougie
+• Corps : Zone entre ouverture et clôture
+• Mèche haute : Plus haut prix atteint
+• Mèche basse : Plus bas prix atteint
+• Bougie verte : Hausse (clôture > ouverture)
+• Bougie rouge : Baisse (clôture < ouverture)
+
+📈 Patterns Importants
+1. Doji : Ouverture = Clôture (indécision)
+2. Marteau : Longue mèche basse (retournement haussier)
+3. Étoile filante : Longue mèche haute (retournement baissier)
+4. Englobante haussière/baissière
+
+💡 Conseil Pro : Ne tradez jamais sur une seule bougie ! Attendez la confirmation.""",
                 "difficulty": "beginner",
-                "category": "crypto",
+                "category": "general",
                 "order": 2,
-                "xp_reward": 50
+                "xp_reward": 75
             },
             {
                 "id": str(uuid.uuid4()),
-                "title": "Analyse Technique de Base",
-                "description": "Apprenez à lire les graphiques et identifier les tendances",
-                "content": "L'analyse technique utilise les données historiques des prix pour prédire les mouvements futurs. Les concepts clés incluent les supports, résistances, et tendances.",
+                "title": "Structure de Marché ICT",
+                "description": "Comprenez comment identifier les tendances et les points clés",
+                "content": """La structure de marché est le fondement de l'analyse ICT/SMC.
+
+📊 Les 3 Structures de Base
+
+1. Tendance Haussière : Higher Highs (HH) + Higher Lows (HL)
+2. Tendance Baissière : Lower Highs (LH) + Lower Lows (LL)
+3. Range : Consolidation entre support et résistance
+
+🔑 Break of Structure (BOS)
+• BOS haussier : Casse un sommet précédent (signal d'achat)
+• BOS baissier : Casse un creux précédent (signal de vente)
+
+🎯 Change of Character (CHoCH)
+Signal de changement de tendance quand le prix ne suit plus la structure actuelle.
+
+💡 Règle d'Or : Tradez AVEC la tendance, jamais contre !""",
                 "difficulty": "intermediate",
                 "category": "general",
                 "order": 3,
-                "xp_reward": 75
+                "xp_reward": 100
             },
             {
                 "id": str(uuid.uuid4()),
-                "title": "Gestion des Risques",
-                "description": "Protégez votre capital avec des stratégies de gestion des risques",
-                "content": "La gestion des risques est cruciale en trading. Ne risquez jamais plus de 1-2% de votre capital sur une seule transaction. Utilisez des stop-loss pour limiter les pertes.",
-                "difficulty": "intermediate",
+                "title": "Liquidité et Smart Money",
+                "description": "Découvrez comment les institutions manipulent le marché",
+                "content": """Le Smart Money représente les grandes institutions : banques, hedge funds, market makers.
+
+💰 Qu'est-ce que la Liquidité ?
+La liquidité = les ordres d'achat/vente en attente dans le marché.
+
+📍 Zones de Liquidité
+• Au-dessus des sommets : Stop Loss des vendeurs
+• En-dessous des creux : Stop Loss des acheteurs
+• Niveaux psychologiques : 100.00, 1.2000, etc.
+
+🎭 Manipulation du Marché
+Phase 1 : Accumulation (institutions accumulent)
+Phase 2 : Manipulation (liquidity grab, faux mouvement)
+Phase 3 : Distribution (vraie direction)
+
+🎯 Comment Trader : Attendez le liquidity grab, puis entrez quand le prix revient dans la zone d'intérêt.
+
+💡 Citation ICT : Le marché cherche toujours la liquidité avant son vrai mouvement.""",
+                "difficulty": "advanced",
                 "category": "general",
                 "order": 4,
-                "xp_reward": 75
+                "xp_reward": 150
             },
             {
                 "id": str(uuid.uuid4()),
-                "title": "Le Marché Forex",
-                "description": "Découvrez le trading de devises sur le marché forex",
-                "content": "Le Forex (Foreign Exchange) est le marché des devises. C'est le plus grand marché financier au monde avec plus de 6 trillions de dollars échangés quotidiennement.",
-                "difficulty": "beginner",
-                "category": "forex",
+                "title": "Order Blocks (OB)",
+                "description": "Les zones où les institutions placent leurs ordres massifs",
+                "content": """Les Order Blocks sont des zones de décision institutionnelle.
+
+📦 Qu'est-ce qu'un Order Block ?
+C'est la dernière bougie avant un mouvement impulsif fort.
+
+🟢 Bullish Order Block
+• Dernière bougie rouge avant une forte hausse
+• Zone de demande institutionnelle
+• Le prix rebondit au retest
+
+🔴 Bearish Order Block
+• Dernière bougie verte avant une forte baisse
+• Zone d'offre institutionnelle
+• Le prix chute au retest
+
+✅ OB de Qualité
+1. Mouvement impulsif après l'OB
+2. Non retesté (plus puissant)
+3. Timeframe élevé (H4/D1)
+4. Confluence avec FVG
+
+🎯 Comment Trader un OB
+1. Identifiez la structure
+2. Marquez les OB
+3. Attendez le retest
+4. Cherchez une confirmation
+5. Entrez avec Stop Loss approprié
+
+💎 Meilleurs OB : Ceux créés après un liquidity grab !""",
+                "difficulty": "advanced",
+                "category": "general",
                 "order": 5,
-                "xp_reward": 50
+                "xp_reward": 150
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "title": "Fair Value Gaps (FVG)",
+                "description": "Les déséquilibres du marché exploités par les pros",
+                "content": """Les Fair Value Gaps sont des zones de déséquilibre créées par des mouvements rapides.
+
+⚡ Qu'est-ce qu'un FVG ?
+Un FVG se forme quand le prix bouge si vite qu'il laisse un vide sur le graphique.
+
+🟢 Bullish FVG : Gap entre mèche basse bougie 1 et mèche haute bougie 3
+🔴 Bearish FVG : Gap entre mèche haute bougie 1 et mèche basse bougie 3
+
+📋 Types de FVG
+1. FVG Standard : Prix remplit 50%+ du gap
+2. FVG Partiel : Prix touche le gap
+3. FVG Inversé : Change de polarité
+
+🎯 Stratégie de Trading
+1. Identifiez un FVG dans la tendance
+2. Attendez le retest
+3. Cherchez un rejet
+4. Entrez avec SL approprié
+5. Target : Prochain FVG opposé
+
+💎 FVG + Order Block = Setup Premium !
+
+💡 Règle ICT : 70% des FVG sont comblés avant que le prix continue.""",
+                "difficulty": "advanced",
+                "category": "general",
+                "order": 6,
+                "xp_reward": 150
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "title": "Kill Zones et Sessions",
+                "description": "Tradez aux meilleurs moments quand le Smart Money est actif",
+                "content": """Les Kill Zones sont les périodes où le Smart Money est le plus actif.
+
+🌍 Les 3 Sessions Principales
+1. Asiatique (00h-09h GMT) : Faible volatilité
+2. Européenne (07h-16h GMT) : Haute volatilité
+3. Américaine (13h-22h GMT) : Très haute volatilité
+
+⚡ Les Kill Zones ICT
+
+London Kill Zone : 08h00-11h00 (Paris)
+• Période la plus volatile
+• Institutions européennes actives
+
+New York Kill Zone : 13h00-16h00 (Paris)
+• Overlap Londres + New York
+• Maximum de liquidité
+
+🎯 Power of 3 (Cycle de chaque Kill Zone)
+1. Accumulation : Consolidation, volume faible
+2. Manipulation : Liquidity grab, faux breakout
+3. Distribution : Vrai mouvement, trend
+
+💡 Comment Utiliser
+• Tradez QUE pendant les Kill Zones
+• Attendez la manipulation
+• London donne la direction du jour
+• NY peut inverser la tendance
+
+⏰ Évitez : 30 min avant/après les news, week-ends, hors Kill Zones""",
+                "difficulty": "advanced",
+                "category": "general",
+                "order": 7,
+                "xp_reward": 200
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "title": "Gestion du Risque ICT",
+                "description": "Protégez votre capital comme un professionnel",
+                "content": """La gestion du risque différencie les gagnants des perdants.
+
+💰 Règle d'Or : Ne risquez JAMAIS plus de 1-2% par trade !
+
+Exemple 10,000€ :
+• Risque 1% = 100€ max par trade
+• 10 pertes = -10% seulement
+• Avec 50% de perte, il faut +100% pour revenir !
+
+📊 Calcul de Position Size
+Position = (Capital × Risque%) / Distance SL en pips
+
+🎯 Ratio Risk/Reward (RR)
+• Minimum : 1:2 (risque 100€, visez 200€)
+• Pro : 1:3 ou plus
+• ICT : souvent 1:5 à 1:10
+
+💎 Types de Stop Loss
+1. Technique : Sous OB haussier / Au-dessus OB baissier
+2. ATR : Basé sur volatilité
+3. Temporel : Si setup ne fonctionne pas en X heures
+
+🎓 Prise de Profit ICT
+• 50% à 1:2 RR
+• 25% à 1:3 RR
+• 25% laissés runner (SL break-even)
+
+Targets : Prochain OB/FVG opposé, zone de liquidité
+
+⚠️ Erreurs Mortelles
+1. Over-leveraging (levier >1:30)
+2. Revenge trading après perte
+3. Déplacer le SL pour éviter stop
+4. Pas de SL = suicide financier
+5. Over-trading (qualité > quantité)
+
+🧠 Psychologie : Une perte fait partie du jeu. Une grosse perte vous sort du jeu.""",
+                "difficulty": "intermediate",
+                "category": "general",
+                "order": 8,
+                "xp_reward": 150
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "title": "Silver Bullet Setup",
+                "description": "La stratégie signature d'ICT pour trader comme un pro",
+                "content": """La Silver Bullet est une des stratégies les plus puissantes d'ICT.
+
+🎯 Fenêtres de Temps Silver Bullet
+• London : 09h00-10h00 (Paris)
+• New York : 16h00-17h00 (Paris)
+
+⚡ Le Setup (3 Phases)
+
+PHASE 1 : Analyse Préalable
+1. Identifiez la tendance H4/D1
+2. Marquez OB, FVG, zones de liquidité
+3. Déterminez le biais (haussier/baissier)
+
+PHASE 2 : Pendant la Kill Zone
+1. Observation (15 premières minutes)
+2. Liquidity Grab (faux mouvement = MANIPULATION)
+3. Reversal rapide (moment magique !)
+
+PHASE 3 : Exécution
+Pour trade HAUSSIER :
+• Prix grab liquidité sous un low
+• Retour rapide créant bullish FVG
+• Entrée au retest FVG/OB
+• SL sous le low du grab
+• Target : Prochain high ou FVG opposé
+
+Pour trade BAISSIER :
+• Prix grab liquidité au-dessus high
+• Retour rapide créant bearish FVG
+• Entrée au retest FVG/OB
+• SL au-dessus du high du grab
+• Target : Prochain low ou FVG opposé
+
+✅ Confirmations Additionnelles
+• FVG dans un OB
+• CHoCH créé
+• Volume augmente
+• Bougie de reversal impulsive
+• Direction = tendance H4/D1
+
+❌ Ne PAS Trader Si
+• News importantes (NFP, CPI, FOMC)
+• Aucun FVG formé
+• Mouvement lent
+• Range (pas de tendance)
+• Vendredi après-midi
+
+💰 Gestion du Trade
+1. Scalp : 1:2 ou 1:3, sortie rapide
+2. Swing : Runner jusqu'au prochain OB/FVG majeur (1:5 à 1:10)
+3. Hybride : 50% à 1:2, 50% runner avec trailing
+
+💎 Statistiques Silver Bullet
+• Win rate : 60-70% (si bien exécuté)
+• RR moyen : 1:3 à 1:5
+• Fréquence : 2-4 setups/semaine par paire
+
+🎯 Prochaines Étapes : Backtestez 50+ trades avant d'utiliser en réel !""",
+                "difficulty": "advanced",
+                "category": "general",
+                "order": 9,
+                "xp_reward": 250
             }
         ]
         await db.lessons.insert_many(sample_lessons)
