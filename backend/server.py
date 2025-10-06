@@ -540,6 +540,10 @@ async def get_daily_challenges():
     """Get today's challenges"""
     today = datetime.utcnow().strftime("%Y-%m-%d")
     challenges = await db.challenges.find({"date": today}).to_list(100)
+    # Remove MongoDB _id field
+    for challenge in challenges:
+        if "_id" in challenge:
+            del challenge["_id"]
     return {"challenges": challenges}
 
 @api_router.get("/leaderboard")
