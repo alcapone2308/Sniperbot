@@ -1,107 +1,94 @@
 name: sniper_market_academy
-description: Application éducative ICT/SMC pour traders - 100% offline
+description: Application éducative SMC pour traders.
 publish_to: 'none'
 
-version: 2.0.0+1
+version: 2.0.0+14
 
 environment:
-  sdk: '>=3.8.1 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  
-  # État et navigation
+  firebase_core: ^3.6.0
+  cloud_firestore: ^5.5.0
   provider: ^6.1.2
-  
-  # Stockage local (offline)
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  shared_preferences: ^2.2.3
-  path_provider: ^2.1.3
-  
-  # Graphiques et charts
-  candlesticks: ^2.1.0
-  fl_chart: ^0.68.0
-  syncfusion_flutter_charts: ^26.2.14
-  
-  # UI/UX
-  lottie: ^3.1.2
-  flutter_svg: ^2.0.10+1
-  google_fonts: ^6.2.1
-  
-  # Utilitaires
-  intl: ^0.19.0
-  uuid: ^4.4.2
-  
-  # Audio
-  audioplayers: ^6.1.0
+  flutter_local_notifications: ^17.0.0
+  url_launcher: ^6.3.0
+  audioplayers: ^5.2.1
+  flutter_native_splash: ^2.4.0
+  lottie: ^3.1.0
+  intl: ^0.18.1
+  in_app_purchase: ^3.1.9
+  shared_preferences: ^2.0.15
+  http: ^1.1.0
+  xml: ^6.3.0
+  image_picker: ^1.0.4
+  youtube_player_iframe: ^5.2.1
+  fl_chart: ^0.64.0
+  web_socket_channel: ^2.4.0
+  candlesticks: ^1.1.1
+  syncfusion_flutter_charts: ^24.2.4
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-  hive_generator: ^2.0.1
-  build_runner: ^2.4.11
+  flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
 
-flutter_launcher_icons:
+flutter_native_splash:
+  color: "#000000"
+  image: assets/images/icon.png
+  android: true
+  ios: true
+
+flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/icon.png"
 
 flutter:
   uses-material-design: true
-  
   assets:
-    # Images principales
-    - assets/images/
     - assets/images/icon.png
-    - assets/images/logo_sniper.png
     - assets/images/menu_background.png
     - assets/images/bg_chart.png
     - assets/images/placeholder.png
-    
-    # Modules explicatifs
-    - assets/images/modules/
-    - assets/images/modules/market_structure_explained.png
-    - assets/images/modules/bos_module_explained.png
-    - assets/images/modules/fvg_module_explained.png
-    - assets/images/modules/ote_module_explained.png
-    - assets/images/modules/liquidity_module_explained.png
-    - assets/images/modules/displacement_module_explained.png
-    - assets/images/modules/orderblock_module_explained.png
-    
-    # Exercices interactifs
-    - assets/images/exercises/
-    - assets/images/exercises/bos_question_graph_1.png
-    - assets/images/exercises/bos_question_graph_2.png
-    - assets/images/exercises/fvg_exercise1_graph.png
-    - assets/images/exercises/ote_exercise1_graph.png
-    - assets/images/exercises/displacement_exercise1_graph.png
-    - assets/images/exercises/liquidity_exercise1_graph.png
-    - assets/images/exercises/orderblock_exercise1_graph.png
-    - assets/images/exercises/setup_complet_exercise1_graph.png
-    - assets/images/exercises/setup_complet_exercise2_graph.png
-    - assets/images/exercises/fvg_example.png
-    
-    # Simulateur
-    - assets/images/charts/
-    - assets/images/charts/chart_1.png
-    - assets/images/charts/chart_2.png
-    - assets/images/charts/chart_3.png
-    - assets/images/charts/chart_4.png
-    
-    # Animations
-    - assets/animations/
+    - assets/images/logo_sniper.png
     - assets/animations/candles.json
-    
-    # Sons
-    - assets/audio/
+
+    # 📘 Modules explicatifs
+    - assets/images/market_structure_explained.png
+    - assets/images/bos_module_explained.png
+    - assets/images/fvg_module_explained.png
+    - assets/images/ote_module_explained.png
+    - assets/images/liquidity_module_explained.png
+    - assets/images/displacement_module_explained.png
+    - assets/images/orderblock_module_explained.png
+
+    # 🧠 Exercices interactifs
+    - assets/images/bos_question_graph_1.png
+    - assets/images/bos_question_graph_2.png
+    - assets/images/fvg_exercise1_graph.png
+    - assets/images/ote_exercise1_graph.png
+    - assets/images/displacement_exercise1_graph.png
+    - assets/images/liquidity_exercise1_graph.png
+    - assets/images/orderblock_exercise1_graph.png
+    - assets/images/setup_complet_exercise1_graph.png
+    - assets/images/setup_complet_exercise2_graph.png
+    - assets/images/fvg_example.png
+
+    # 📊 Simulateur papier
+    - assets/images/chart_1.png
+    - assets/images/chart_2.png
+    - assets/images/chart_3.png
+    - assets/images/chart_4.png
+    - assets/images/scalp_ready_assistant_exercise1_graph.png
+    - assets/images/scalp_ready_exercise1.png
+
+    # 🤖 Bot IA - Image test pour l'analyse
+    - assets/images/test.png
+
+    # 🔊 Sons
     - assets/audio/sniper_scan_effect.mp3
-    
-    # Données JSON (contenu offline)
-    - assets/data/
-    - assets/data/modules.json
-    - assets/data/exercises.json
-    - assets/data/glossary.json
