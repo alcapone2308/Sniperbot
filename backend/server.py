@@ -452,6 +452,10 @@ async def get_portfolio(user_id: str):
 async def get_transactions(user_id: str):
     """Get user's transaction history"""
     transactions = await db.transactions.find({"user_id": user_id}).sort("timestamp", -1).to_list(100)
+    # Remove MongoDB _id field
+    for transaction in transactions:
+        if "_id" in transaction:
+            del transaction["_id"]
     return {"transactions": transactions}
 
 @api_router.get("/lessons")
