@@ -3,48 +3,48 @@
     {
       "test": "Create New User",
       "success": true,
-      "details": "User created successfully with ID: c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
-      "timestamp": "2025-10-06T18:30:23.645115",
+      "details": "User created successfully with ID: 28f4a9b4-d576-41f7-a1d9-ae67f8841e2a",
+      "timestamp": "2025-10-06T18:31:24.642835",
       "response_data": {
-        "id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
-        "email": "trader_586c5c79@tradeplay.com",
+        "id": "28f4a9b4-d576-41f7-a1d9-ae67f8841e2a",
+        "email": "trader_0202ff9d@tradeplay.com",
         "name": "Jean Dupont",
         "avatar": "https://example.com/avatar.jpg",
         "level": 1,
         "xp": 0,
         "virtual_balance": 10000.0,
         "total_profit": 0.0,
-        "created_at": "2025-10-06T18:30:23.640720"
+        "created_at": "2025-10-06T18:31:24.638537"
       }
     },
     {
       "test": "Login Existing User",
       "success": true,
       "details": "Existing user login successful",
-      "timestamp": "2025-10-06T18:30:23.656126"
+      "timestamp": "2025-10-06T18:31:24.651782"
     },
     {
       "test": "Get User Info",
       "success": true,
       "details": "User info retrieved: Jean Dupont",
-      "timestamp": "2025-10-06T18:30:23.704998",
+      "timestamp": "2025-10-06T18:31:24.703024",
       "response_data": {
-        "id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
-        "email": "trader_586c5c79@tradeplay.com",
+        "id": "28f4a9b4-d576-41f7-a1d9-ae67f8841e2a",
+        "email": "trader_0202ff9d@tradeplay.com",
         "name": "Jean Dupont",
         "avatar": "https://example.com/avatar.jpg",
         "level": 1,
         "xp": 0,
         "virtual_balance": 10000.0,
         "total_profit": 0.0,
-        "created_at": "2025-10-06T18:30:23.640000"
+        "created_at": "2025-10-06T18:31:24.638000"
       }
     },
     {
       "test": "Get Non-existent User",
       "success": true,
       "details": "Correctly returned 404 for non-existent user",
-      "timestamp": "2025-10-06T18:30:23.712496"
+      "timestamp": "2025-10-06T18:31:24.715798"
     }
   ],
   "market_data": [
@@ -52,7 +52,7 @@
       "test": "Get Crypto Prices",
       "success": true,
       "details": "Retrieved 1 crypto prices",
-      "timestamp": "2025-10-06T18:30:23.913150",
+      "timestamp": "2025-10-06T18:31:24.846465",
       "response_data": [
         {
           "symbol": "STATUS",
@@ -67,19 +67,19 @@
       "test": "Get Economic News",
       "success": true,
       "details": "Retrieved 5 news articles",
-      "timestamp": "2025-10-06T18:30:23.923173",
+      "timestamp": "2025-10-06T18:31:24.857826",
       "response_data": [
         {
           "id": "1",
           "title": "Bitcoin atteint un nouveau sommet historique",
           "source": "Crypto Daily",
-          "timestamp": "2025-10-06T18:30:23.920131"
+          "timestamp": "2025-10-06T18:31:24.854776"
         },
         {
           "id": "2",
           "title": "Les march\u00e9s europ\u00e9ens en hausse apr\u00e8s annonce de la BCE",
           "source": "Financial Times",
-          "timestamp": "2025-10-06T18:30:23.920136"
+          "timestamp": "2025-10-06T18:31:24.854780"
         }
       ]
     }
@@ -89,7 +89,7 @@
       "test": "Buy Crypto",
       "success": true,
       "details": "Crypto purchase executed successfully",
-      "timestamp": "2025-10-06T18:30:23.935810",
+      "timestamp": "2025-10-06T18:31:24.880232",
       "response_data": {
         "success": true,
         "message": "Trade executed successfully"
@@ -99,11 +99,11 @@
       "test": "Get Portfolio",
       "success": true,
       "details": "Portfolio retrieved with 1 positions",
-      "timestamp": "2025-10-06T18:30:23.984302",
+      "timestamp": "2025-10-06T18:31:24.889184",
       "response_data": [
         {
-          "id": "d8d69090-68f8-4428-b088-bf59a45dd905",
-          "user_id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+          "id": "d3479a43-d00b-40f9-b13f-d6199ecfc5f1",
+          "user_id": "28f4a9b4-d576-41f7-a1d9-ae67f8841e2a",
           "symbol": "BTC",
           "asset_type": "crypto",
           "quantity": 0.1,
@@ -112,7 +112,7 @@
           "total_value": 0.0,
           "profit_loss": 0.0,
           "profit_loss_percent": 0.0,
-          "created_at": "2025-10-06T18:30:23.931000"
+          "created_at": "2025-10-06T18:31:24.867000"
         }
       ]
     },
@@ -120,7 +120,7 @@
       "test": "Sell Crypto",
       "success": true,
       "details": "Crypto sale executed successfully",
-      "timestamp": "2025-10-06T18:30:24.035288",
+      "timestamp": "2025-10-06T18:31:24.940839",
       "response_data": {
         "success": true,
         "message": "Trade executed successfully"
@@ -130,29 +130,29 @@
       "test": "Get Transaction History",
       "success": true,
       "details": "Retrieved 2 transactions",
-      "timestamp": "2025-10-06T18:30:24.084164",
+      "timestamp": "2025-10-06T18:31:24.951333",
       "response_data": [
         {
-          "id": "8c430008-0caf-41fe-ae32-fffc15f0dc93",
-          "user_id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+          "id": "c8246a70-ee1a-4b6f-92d5-a0a81ce02cd7",
+          "user_id": "28f4a9b4-d576-41f7-a1d9-ae67f8841e2a",
           "symbol": "BTC",
           "asset_type": "crypto",
           "transaction_type": "sell",
           "quantity": 0.05,
           "price": 46000.0,
           "total": 2300.0,
-          "timestamp": "2025-10-06T18:30:23.990000"
+          "timestamp": "2025-10-06T18:31:24.896000"
         },
         {
-          "id": "4c99b689-2215-4f1f-8e60-baf5652338b0",
-          "user_id": "c65fd1cc-0245-4811-8c2e-16e1ffc71e08",
+          "id": "f2e0632e-673d-47e6-95cc-02c333e2caaf",
+          "user_id": "28f4a9b4-d576-41f7-a1d9-ae67f8841e2a",
           "symbol": "BTC",
           "asset_type": "crypto",
           "transaction_type": "buy",
           "quantity": 0.1,
           "price": 45000.0,
           "total": 4500.0,
-          "timestamp": "2025-10-06T18:30:23.932000"
+          "timestamp": "2025-10-06T18:31:24.868000"
         }
       ]
     },
@@ -160,7 +160,7 @@
       "test": "Invalid Trade - Insufficient Balance",
       "success": true,
       "details": "Correctly rejected trade with insufficient balance",
-      "timestamp": "2025-10-06T18:30:24.096849"
+      "timestamp": "2025-10-06T18:31:24.960329"
     }
   ],
   "learning": [
@@ -168,7 +168,7 @@
       "test": "Get All Lessons",
       "success": true,
       "details": "Retrieved 5 lessons",
-      "timestamp": "2025-10-06T18:30:24.104464",
+      "timestamp": "2025-10-06T18:31:24.969077",
       "response_data": [
         {
           "id": "c337388e-292f-4573-8498-4e4ca8ea866a",
@@ -194,15 +194,25 @@
     },
     {
       "test": "Get Lesson Details",
-      "success": false,
-      "details": "Failed with status 500",
-      "timestamp": "2025-10-06T18:30:24.114675"
+      "success": true,
+      "details": "Retrieved lesson: Introduction au Trading",
+      "timestamp": "2025-10-06T18:31:24.977254",
+      "response_data": {
+        "id": "c337388e-292f-4573-8498-4e4ca8ea866a",
+        "title": "Introduction au Trading",
+        "description": "Apprenez les bases du trading et les concepts fondamentaux",
+        "content": "Le trading est l'achat et la vente d'actifs financiers dans le but de r\u00e9aliser un profit. Les actifs peuvent inclure des actions, des cryptomonnaies, des devises (forex) et plus encore.",
+        "difficulty": "beginner",
+        "category": "general",
+        "order": 1,
+        "xp_reward": 50
+      }
     },
     {
       "test": "Complete Lesson",
       "success": true,
       "details": "Lesson completed, XP earned: 50",
-      "timestamp": "2025-10-06T18:30:24.167037",
+      "timestamp": "2025-10-06T18:31:25.026691",
       "response_data": {
         "success": true,
         "xp_earned": 50
@@ -212,7 +222,7 @@
       "test": "Get Lesson Quizzes",
       "success": true,
       "details": "Retrieved 1 quizzes",
-      "timestamp": "2025-10-06T18:30:24.215125",
+      "timestamp": "2025-10-06T18:31:25.035623",
       "response_data": [
         {
           "id": "2823e849-1fe0-44e7-958d-1deb21de09a7",
@@ -234,7 +244,7 @@
       "test": "Submit Quiz Answer",
       "success": true,
       "details": "Quiz submitted, correct: True, XP: 25",
-      "timestamp": "2025-10-06T18:30:24.224375",
+      "timestamp": "2025-10-06T18:31:25.044534",
       "response_data": {
         "correct": true,
         "explanation": "Le trading est l'achat et la vente d'actifs financiers pour r\u00e9aliser des profits.",
@@ -247,7 +257,7 @@
       "test": "Get Daily Challenges",
       "success": true,
       "details": "Retrieved 1 daily challenges",
-      "timestamp": "2025-10-06T18:30:24.272493",
+      "timestamp": "2025-10-06T18:31:25.052880",
       "response_data": [
         {
           "id": "7ac3814c-c5d2-4647-83b0-8a7da74a14cc",
@@ -263,8 +273,8 @@
     {
       "test": "Get Leaderboard",
       "success": true,
-      "details": "Retrieved leaderboard with 4 users",
-      "timestamp": "2025-10-06T18:30:24.281441",
+      "details": "Retrieved leaderboard with 5 users",
+      "timestamp": "2025-10-06T18:31:25.104751",
       "response_data": [
         {
           "rank": 1,
@@ -276,15 +286,15 @@
         },
         {
           "rank": 2,
-          "name": "Test User",
-          "avatar": null,
+          "name": "Jean Dupont",
+          "avatar": "https://example.com/avatar.jpg",
           "level": 1,
-          "total_profit": 0.0,
-          "xp": 0
+          "total_profit": 50.0,
+          "xp": 95
         },
         {
           "rank": 3,
-          "name": "Jean Dupont",
+          "name": "Test User",
           "avatar": null,
           "level": 1,
           "total_profit": 0.0,
@@ -297,19 +307,29 @@
     {
       "test": "AI Assistant Query",
       "success": true,
-      "details": "AI responded with 2618 characters",
-      "timestamp": "2025-10-06T18:30:30.896871",
+      "details": "AI responded with 2500 characters",
+      "timestamp": "2025-10-06T18:31:34.557839",
       "response_data": {
-        "response_preview": "Bien s\u00fbr ! Commen\u00e7ons par le d\u00e9but.\n\n### Qu'est-ce que le Bitcoin ?\n\nLe Bitcoin est une **cryptomonn"
+        "response_preview": "Bien s\u00fbr, je suis ravi de t'aider \u00e0 comprendre le Bitcoin !\n\n### Qu'est-ce que le Bitcoin ?\n\nLe Bitc"
       }
     }
   ],
   "progress": [
     {
       "test": "Get User Progress",
-      "success": false,
-      "details": "Failed with status 500",
-      "timestamp": "2025-10-06T18:30:30.905323"
+      "success": true,
+      "details": "Progress retrieved for user",
+      "timestamp": "2025-10-06T18:31:34.566821",
+      "response_data": {
+        "user_id": "28f4a9b4-d576-41f7-a1d9-ae67f8841e2a",
+        "completed_lessons": [
+          "c337388e-292f-4573-8498-4e4ca8ea866a"
+        ],
+        "completed_quizzes": [
+          "2823e849-1fe0-44e7-958d-1deb21de09a7"
+        ],
+        "completed_challenges": []
+      }
     }
   ]
 }
