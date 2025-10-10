@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "895034541399",
+    "project_id": "snipermarketacademy",
+    "storage_bucket": "snipermarketacademy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895034541399:android:ef572381d18d132bf76a12",
+        "android_client_info": {
+          "package_name": "com.snipermarketacademy.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrBXhKoy9LyvjZ6AX1bwp1LdA7r6TSJxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
