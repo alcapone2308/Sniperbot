@@ -1,0 +1,23 @@
+workflows:
+  ios-release:
+    name: iOS Release
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: 🔹 Clean project
+        script: |
+          flutter clean
+          rm -rf ios/Pods ios/Podfile.lock ios/Flutter/Flutter.framework
+          cd ios && pod install && cd ..
+      - name: 🔹 Get dependencies
+        script: flutter pub get
+      - name: 🔹 Build iOS release
+        script: flutter build ipa --release --no-tree-shake-icons
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - capron.kevin@hotmail.fr
