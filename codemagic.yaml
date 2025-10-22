@@ -1,39 +1,100 @@
 workflows:
   ios-release:
-    name: 📱 iOS Release (TestFlight)
+    name: "📱 iOS Release - TestFlight & App Store"
     max_build_duration: 120
+    instance_type: mac_mini_m2
+
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
+
       groups:
-        - New_group        # ✅ Ton groupe Codemagic avec les clés Apple
+        # Créez ce groupe dans Codemagic avec vos variables
+        - app_store_credentials
+
       vars:
+        # Informations de base
         BUNDLE_ID: "com.snipermarketacademy.snipermarketacademy"
-        APP_STORE_CONNECT_TEAM_ID: "H3C8LF5BT4"
+        XCODE_WORKSPACE: "Runner.xcworkspace"
+        XCODE_SCHEME: "Runner"
+
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.snipermarketacademy.snipermarketacademy
+
     scripts:
-      - name: 🧹 Clean & Install Pods
+      - name: "🔐 Configuration du code signing"
         script: |
+          set -e
+          echo "Configuration des certificats et provisioning profiles..."
+          xcode-project use-profiles
+
+      - name: "🧹 Nettoyage et préparation"
+        script: |
+          set -e
+          echo "Nettoyage de l'environnement Flutter..."
           flutter clean
           flutter pub get
-          cd ios
-          pod init || true        # ✅ crée le Podfile si absent
-          pod install             # ✅ installe les dépendances CocoaPods
-          cd ..
-      - name: 📦 Get dependencies
-        script: flutter pub get
-      - name: 🏗️ Build iOS Release .ipa
+
+      - name: "📦 Installation des dépendances iOS"
         script: |
-          flutter build ipa --release --no-tree-shake-icons \
-            --build-name=1.0.0 --build-number=1
+          set -e
+          cd ios
+          rm -rf Pods Podfile.lock .symlinks
+          pod install --repo-update
+          cd ..
+
+      - name: "🔍 Vérification de la configuration"
+        script: |
+          flutter doctor -v
+          cd ios && xcodebuild -list -workspace Runner.xcworkspace && cd ..
+
+      - name: "🏗️ Build de l'application iOS"
+        script: |
+          set -e
+          set -x
+          
+          BUILD_NUMBER=$(($(date +%s)))
+          
+          flutter build ipa \
+            --release \
+            --export-options-plist=ios/ExportOptions.plist \
+            --build-name=1.0.0 \
+            --build-number=$BUILD_NUMBER
+
+      - name: "✅ Vérification de l'IPA"
+        script: |
+          if [ -f build/ios/ipa/*.ipa ]; then
+            echo "✅ IPA généré avec succès"
+            ls -lh build/ios/ipa/*.ipa
+          else
+            echo "❌ Erreur: IPA non trouvé"
+            exit 1
+          fi
+
     artifacts:
       - build/ios/ipa/*.ipa
-      - build/ios/ipa/Runner.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+
     publishing:
+      email:
+        recipients:
+          - capron.kevin@hotmail.fr
+        notify:
+          success: true
+          failure: true
+
       app_store_connect:
-        apple_id: "capron.kevin@hotmail.fr"                # 🔐 Ton compte Apple Developer
-        team_id: "H3C8LF5BT4"                              # 🔐 Team ID
-        api_key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER       # 🔐 Variables Codemagic
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID             # 🔐 Variables Codemagic
-        key_content: $APP_STORE_CONNECT_PRIVATE_KEY         # 🔐 Variables Codemagic
+        auth:
+          key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+          issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+          key: $APP_STORE_CONNECT_PRIVATE_KEY
+
         submit_to_testflight: true
+        beta_groups:
+          - Internal Testers
+
+        # Décommentez pour soumettre à l'App Store
+        # submit_to_app_store: true
