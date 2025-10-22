@@ -13,13 +13,13 @@ workflows:
       cocoapods: default
 
       vars:
-        BUNDLE_ID: "com.snipermarketacademy.snipermarketacademy"
+        BUNDLE_ID: "com.snipermarketacademy.sniperMarketAcademy"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
 
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.snipermarketacademy.snipermarketacademy
+        bundle_identifier: com.snipermarketacademy.sniperMarketAcademy
 
     scripts:
       - name: "🔐 Configure code signing"
