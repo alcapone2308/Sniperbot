@@ -4,7 +4,6 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
 
-    # 🔗 Utilisez le nom exact de votre intégration
     integrations:
       app_store_connect: CodemagicKey
 
@@ -23,6 +22,14 @@ workflows:
         bundle_identifier: com.snipermarketacademy.sniperMarketAcademy
 
     scripts:
+      - name: "📱 Configure for iPhone only"
+        script: |
+          set -e
+          /usr/libexec/PlistBuddy -c "Delete :UIDeviceFamily" ios/Runner/Info.plist || true
+          /usr/libexec/PlistBuddy -c "Add :UIDeviceFamily array" ios/Runner/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :UIDeviceFamily:0 integer 1" ios/Runner/Info.plist
+          echo "✅ App configurée pour iPhone uniquement"
+
       - name: "🧹 Nettoyage et préparation"
         script: |
           set -e
@@ -72,7 +79,6 @@ workflows:
           success: true
           failure: true
 
-      # 🚀 Upload automatique sur TestFlight
       app_store_connect:
         auth: integration
         submit_to_testflight: true
