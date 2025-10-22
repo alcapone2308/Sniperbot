@@ -1,23 +1,39 @@
 workflows:
   ios-release:
-    name: iOS Release
+    name: 📱 iOS Release (TestFlight)
+    max_build_duration: 120
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
+      groups:
+        - New_group        # ✅ Ton groupe Codemagic avec les clés Apple
+      vars:
+        BUNDLE_ID: "com.snipermarketacademy.snipermarketacademy"
+        APP_STORE_CONNECT_TEAM_ID: "H3C8LF5BT4"
     scripts:
-      - name: 🔹 Clean project
+      - name: 🧹 Clean & Install Pods
         script: |
           flutter clean
-          rm -rf ios/Pods ios/Podfile.lock ios/Flutter/Flutter.framework
-          cd ios && pod install && cd ..
-      - name: 🔹 Get dependencies
+          flutter pub get
+          cd ios
+          pod init || true        # ✅ crée le Podfile si absent
+          pod install             # ✅ installe les dépendances CocoaPods
+          cd ..
+      - name: 📦 Get dependencies
         script: flutter pub get
-      - name: 🔹 Build iOS release
-        script: flutter build ipa --release --no-tree-shake-icons
+      - name: 🏗️ Build iOS Release .ipa
+        script: |
+          flutter build ipa --release --no-tree-shake-icons \
+            --build-name=1.0.0 --build-number=1
     artifacts:
       - build/ios/ipa/*.ipa
+      - build/ios/ipa/Runner.ipa
     publishing:
-      email:
-        recipients:
-          - capron.kevin@hotmail.fr
+      app_store_connect:
+        apple_id: "capron.kevin@hotmail.fr"                # 🔐 Ton compte Apple Developer
+        team_id: "H3C8LF5BT4"                              # 🔐 Team ID
+        api_key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER       # 🔐 Variables Codemagic
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID             # 🔐 Variables Codemagic
+        key_content: $APP_STORE_CONNECT_PRIVATE_KEY         # 🔐 Variables Codemagic
+        submit_to_testflight: true
