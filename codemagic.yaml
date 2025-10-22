@@ -3,26 +3,17 @@ workflows:
     name: "📱 iOS Release - TestFlight & App Store"
     max_build_duration: 120
     instance_type: mac_mini_m2
-
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
-
-      groups:
-        # Créez ce groupe dans Codemagic avec vos variables
-        - app_store_credentials
-
       vars:
-        # Informations de base
         BUNDLE_ID: "com.snipermarketacademy.snipermarketacademy"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
-
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.snipermarketacademy.snipermarketacademy
-
     scripts:
       - name: "🔐 Configuration du code signing"
         script: |
@@ -33,7 +24,6 @@ workflows:
       - name: "🧹 Nettoyage et préparation"
         script: |
           set -e
-          echo "Nettoyage de l'environnement Flutter..."
           flutter clean
           flutter pub get
 
@@ -53,10 +43,7 @@ workflows:
       - name: "🏗️ Build de l'application iOS"
         script: |
           set -e
-          set -x
-          
           BUILD_NUMBER=$(($(date +%s)))
-          
           flutter build ipa \
             --release \
             --export-options-plist=ios/ExportOptions.plist \
@@ -76,7 +63,6 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
-      - flutter_drive.log
 
     publishing:
       email:
@@ -87,14 +73,7 @@ workflows:
           failure: true
 
       app_store_connect:
-        auth:
-          key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-          issuer_id: $APP_STORE_CONNECT_ISSUER_ID
-          key: $APP_STORE_CONNECT_PRIVATE_KEY
-
+        auth: integration
         submit_to_testflight: true
         beta_groups:
           - Internal Testers
-
-        # Décommentez pour soumettre à l'App Store
-        # submit_to_app_store: true
