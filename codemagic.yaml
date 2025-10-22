@@ -4,6 +4,10 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
 
+    # 🔗 Utilisez le nom exact de votre intégration
+    integrations:
+      app_store_connect: CodemagicKey
+
     environment:
       flutter: stable
       xcode: latest
@@ -36,9 +40,7 @@ workflows:
         script: |
           set -e
           set -x
-          # Liste les certificats et profiles disponibles
           keychain list-certificates
-          # Applique les certificats au projet Xcode
           xcode-project use-profiles --project ios/Runner.xcodeproj
 
       - name: "🔍 Vérification de la configuration"
@@ -69,3 +71,10 @@ workflows:
         notify:
           success: true
           failure: true
+
+      # 🚀 Upload automatique sur TestFlight
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        beta_groups:
+          - Internal Testers
