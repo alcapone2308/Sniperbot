@@ -16,13 +16,12 @@ workflows:
         BUNDLE_ID: "com.snipermarketacademy.snipermarketacademy"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
-        # Ajoutez ces variables pour l'authentification Apple
-        APP_STORE_CONNECT_KEY_IDENTIFIER: "67RP97HY5N"
-        APP_STORE_CONNECT_ISSUER_ID: "6ae779f9-099f-4f6c-bf6c-e2f63ec6b24a"
 
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.snipermarketacademy.snipermarketacademy
+        # 🔥 AJOUTEZ CETTE LIGNE
+        team_id: H3C8LF5BT4
 
     scripts:
       - name: "🔐 Fetch signing files with App Store Connect API"
