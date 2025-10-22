@@ -3,17 +3,25 @@ workflows:
     name: "📱 iOS Release - TestFlight & App Store"
     max_build_duration: 120
     instance_type: mac_mini_m2
+
+    # 🔗 AJOUTEZ CETTE SECTION INTEGRATIONS
+    integrations:
+      app_store_connect: codemagic
+
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
+
       vars:
         BUNDLE_ID: "com.snipermarketacademy.snipermarketacademy"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
+
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.snipermarketacademy.snipermarketacademy
+
     scripts:
       - name: "🔐 Configuration du code signing"
         script: |
