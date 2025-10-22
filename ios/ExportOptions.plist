@@ -16,8 +16,8 @@
     <string>manual</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>com.snipermarketacademy.sniperMarketAcademy</key>
-        <string>Sniper Market Academy iOS ios_app_store 1761072069</string>
+        <key>com.snipermarketacademy.snipermarketacademy</key>
+        <string>match AppStore com.snipermarketacademy.snipermarketacademy</string>
     </dict>
 </dict>
 </plist>
