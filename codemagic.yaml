@@ -4,7 +4,6 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
 
-    # 🔗 AJOUTEZ CETTE SECTION INTEGRATIONS
     integrations:
       app_store_connect: codemagic
 
@@ -17,16 +16,24 @@ workflows:
         BUNDLE_ID: "com.snipermarketacademy.snipermarketacademy"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
+        # Ajoutez ces variables pour l'authentification Apple
+        APP_STORE_CONNECT_KEY_IDENTIFIER: "67RP97HY5N"
+        APP_STORE_CONNECT_ISSUER_ID: "6ae779f9-099f-4f6c-bf6c-e2f63ec6b24a"
 
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.snipermarketacademy.snipermarketacademy
 
     scripts:
-      - name: "🔐 Configuration du code signing"
+      - name: "🔐 Fetch signing files with App Store Connect API"
+        script: |
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type APP_STORE \
+            --create
+
+      - name: "🔐 Configure code signing"
         script: |
           set -e
-          echo "Configuration des certificats et provisioning profiles..."
           xcode-project use-profiles
 
       - name: "🧹 Nettoyage et préparation"
@@ -57,16 +64,6 @@ workflows:
             --export-options-plist=ios/ExportOptions.plist \
             --build-name=1.0.0 \
             --build-number=$BUILD_NUMBER
-
-      - name: "✅ Vérification de l'IPA"
-        script: |
-          if [ -f build/ios/ipa/*.ipa ]; then
-            echo "✅ IPA généré avec succès"
-            ls -lh build/ios/ipa/*.ipa
-          else
-            echo "❌ Erreur: IPA non trouvé"
-            exit 1
-          fi
 
     artifacts:
       - build/ios/ipa/*.ipa
