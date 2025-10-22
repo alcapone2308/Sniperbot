@@ -4,9 +4,6 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
 
-    integrations:
-      app_store_connect: CodemagicKey
-
     environment:
       flutter: stable
       xcode: latest
@@ -22,11 +19,6 @@ workflows:
         bundle_identifier: com.snipermarketacademy.sniperMarketAcademy
 
     scripts:
-      - name: "🔐 Configure code signing"
-        script: |
-          set -e
-          xcode-project use-profiles
-
       - name: "🧹 Nettoyage et préparation"
         script: |
           set -e
@@ -67,9 +59,3 @@ workflows:
         notify:
           success: true
           failure: true
-
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: true
-        beta_groups:
-          - Internal Testers
