@@ -14,20 +14,20 @@ workflows:
 
       vars:
         BUNDLE_ID: "com.snipermarketacademy.snipermarketacademy"
+        TEAM_ID: "H3C8LF5BT4"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
 
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.snipermarketacademy.snipermarketacademy
-        # 🔥 AJOUTEZ CETTE LIGNE
-        team_id: H3C8LF5BT4
 
     scripts:
       - name: "🔐 Fetch signing files with App Store Connect API"
         script: |
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type APP_STORE \
+            --team-id "$TEAM_ID" \
             --create
 
       - name: "🔐 Configure code signing"
