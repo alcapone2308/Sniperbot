@@ -29,9 +29,17 @@ workflows:
         script: |
           set -e
           cd ios
-          rm -rf Pods Podfile.lock .symlinks
-          pod install --repo-update
+          pod install
           cd ..
+
+      - name: "🔐 Appliquer les certificats et provisioning profiles"
+        script: |
+          set -e
+          set -x
+          # Liste les certificats et profiles disponibles
+          keychain list-certificates
+          # Applique les certificats au projet Xcode
+          xcode-project use-profiles --project ios/Runner.xcodeproj
 
       - name: "🔍 Vérification de la configuration"
         script: |
@@ -41,11 +49,13 @@ workflows:
       - name: "🏗️ Build de l'application iOS"
         script: |
           set -e
+          set -x
           BUILD_NUMBER=$(($(date +%s)))
+          
           flutter build ipa \
             --release \
             --export-options-plist=ios/ExportOptions.plist \
-            --build-name=1.0.0 \
+            --build-name=2.0.0 \
             --build-number=$BUILD_NUMBER
 
     artifacts:
