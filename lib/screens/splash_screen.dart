@@ -14,12 +14,36 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
+  bool _assetsLoaded = false;
 
   @override
   void initState() {
     super.initState();
 
-    // ⚡ Animation logo (zoom + fade)
+    _initAnimations();
+    _preloadAssets().then((_) {
+      // Délai de 3s avant de passer à la page Home
+      Timer(const Duration(seconds: 3), () {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, "/home");
+        }
+      });
+    });
+  }
+
+  /// ⚙️ Précharge les assets pour éviter écran blanc sur iOS
+  Future<void> _preloadAssets() async {
+    try {
+      await precacheImage(const AssetImage("assets/images/icon.png"), context);
+      await AssetLottie('assets/animations/candles.json');
+      setState(() => _assetsLoaded = true);
+    } catch (e) {
+      debugPrint("⚠️ Erreur de préchargement assets: $e");
+    }
+  }
+
+  /// 🔄 Initialise les animations
+  void _initAnimations() {
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -34,17 +58,22 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _controller.forward();
-
-    // ⏳ Après 3s → HomePage
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, "/home");
-    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  /// 🧩 Widget de fallback si les assets échouent
+  Widget _safeLottie(String path) {
+    try {
+      return Lottie.asset(path, fit: BoxFit.cover);
+    } catch (e) {
+      debugPrint("⚠️ Lottie asset introuvable: $path");
+      return const SizedBox();
+    }
   }
 
   @override
@@ -54,10 +83,13 @@ class _SplashScreenState extends State<SplashScreen>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // 🔥 Bougies animées (fond Lottie)
-          Lottie.asset("assets/animations/candles.json", fit: BoxFit.cover),
+          // 🔥 Fond animé (Lottie)
+          if (_assetsLoaded)
+            _safeLottie("assets/animations/candles.json")
+          else
+            Container(color: Colors.black),
 
-          // 🎯 Logo avec animation fade + zoom
+          // 🎯 Logo central animé
           Center(
             child: ScaleTransition(
               scale: _scaleAnimation,
@@ -66,7 +98,24 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Image.asset(
                   "assets/images/icon.png",
                   width: 180,
+                  fit: BoxFit.contain,
                 ),
+              ),
+            ),
+          ),
+
+          // 💬 Texte de chargement
+          const Positioned(
+            bottom: 40,
+            left: 0,
+            right: 0,
+            child: Text(
+              "Chargement de Sniper Market Academy...",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
               ),
             ),
           ),

@@ -2,6 +2,7 @@ name: sniper_market_academy
 description: Application éducative SMC pour traders.
 publish_to: 'none'
 
+# 🧩 Version de l’application (Android + iOS)
 version: 2.0.0+14
 
 environment:
@@ -11,16 +12,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Storage / offline
+  # 🧠 Stockage local / hors ligne
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   shared_preferences: ^2.2.3
   path_provider: ^2.1.3
 
-  # State management
+  # 🔄 State management
   provider: ^6.1.2
 
-  # UI / UX
+  # 🎨 UI / UX
   flutter_local_notifications: ^17.0.0
   url_launcher: ^6.3.0
   audioplayers: ^5.2.1
@@ -29,31 +30,28 @@ dependencies:
   intl: ^0.19.0
   image_picker: ^1.0.4
 
-  # Charts
+  # 📊 Graphiques & Chandeliers
   fl_chart: ^0.68.0
   candlesticks: ^2.1.0
   syncfusion_flutter_charts: ^26.2.14
 
-  # Utils
+  # ⚙️ Utilitaires
   uuid: ^4.4.2
   http: ^1.2.2
   xml: ^6.6.1
 
-  # ----------------- PACKAGES MANQUANTS (ajoutés) -----------------
-  # Firebase
-  # ✅ Firebase (versions compatibles entre elles)
+  # ☁️ Firebase (versions synchronisées entre elles)
   firebase_core: ^3.7.0
   cloud_firestore: ^5.4.4
   firebase_analytics: ^11.6.0
 
-
-  # YouTube player (utilisé dans modules)
+  # 🎥 YouTube (modules éducatifs)
   youtube_player_iframe: ^5.2.2
 
-  # In-app purchases (subscription)
+  # 💳 Abonnements In-App
   in_app_purchase: ^3.1.9
 
-  # Websocket / realtime
+  # 🔌 WebSocket / données en temps réel
   web_socket_channel: ^3.0.3
 
 dev_dependencies:
@@ -64,12 +62,14 @@ dev_dependencies:
   hive_generator: ^2.0.1
   build_runner: ^2.4.9
 
+# 🖼️ Splash Screen automatique
 flutter_native_splash:
   color: "#000000"
   image: assets/images/icon.png
   android: true
   ios: true
 
+# 📱 Icônes d’application
 flutter_icons:
   android: true
   ios: true
@@ -77,45 +77,9 @@ flutter_icons:
 
 flutter:
   uses-material-design: true
+
   assets:
-    - assets/images/icon.png
-    - assets/images/menu_background.png
-    - assets/images/bg_chart.png
-    - assets/images/placeholder.png
-    - assets/images/logo_sniper.png
-    - assets/animations/candles.json
-
-    # 📘 Modules explicatifs
-    - assets/images/market_structure_explained.png
-    - assets/images/bos_module_explained.png
-    - assets/images/fvg_module_explained.png
-    - assets/images/ote_module_explained.png
-    - assets/images/liquidity_module_explained.png
-    - assets/images/displacement_module_explained.png
-    - assets/images/orderblock_module_explained.png
-
-    # 🧠 Exercices interactifs
-    - assets/images/bos_question_graph_1.png
-    - assets/images/bos_question_graph_2.png
-    - assets/images/fvg_exercise1_graph.png
-    - assets/images/ote_exercise1_graph.png
-    - assets/images/displacement_exercise1_graph.png
-    - assets/images/liquidity_exercise1_graph.png
-    - assets/images/orderblock_exercise1_graph.png
-    - assets/images/setup_complet_exercise1_graph.png
-    - assets/images/setup_complet_exercise2_graph.png
-    - assets/images/fvg_example.png
-
-    # 📊 Simulateur papier
-    - assets/images/chart_1.png
-    - assets/images/chart_2.png
-    - assets/images/chart_3.png
-    - assets/images/chart_4.png
-    - assets/images/scalp_ready_assistant_exercise1_graph.png
-    - assets/images/scalp_ready_exercise1.png
-
-    # 🤖 Bot IA - Image test pour l'analyse
-    - assets/images/test.png
-
-    # 🔊 Sons
-    - assets/audio/sniper_scan_effect.mp3
+    # 📁 Dossiers d'assets inclus en entier
+    - assets/images/
+    - assets/animations/
+    - assets/audio/
