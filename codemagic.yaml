@@ -21,7 +21,37 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.snipermarketacademy.sniperMarketAcademy
 
+      groups:
+        - New_group
+
     scripts:
+      - name: "🔥 Injecter le fichier Firebase (depuis GOOGLE_SERVICE_INFO)"
+        script: |
+          set -e
+          if [ -z "$GOOGLE_SERVICE_INFO" ]; then
+            echo "❌ Variable GOOGLE_SERVICE_INFO introuvable. Ajoute-la dans Environment variables."
+            exit 1
+          fi
+          # décoder la variable base64 dans le fichier plist
+          echo "$GOOGLE_SERVICE_INFO" | base64 --decode > ios/Runner/GoogleService-Info.plist
+          echo "✅ Fichier GoogleService-Info.plist écrit en ios/Runner/GoogleService-Info.plist"
+
+          # Vérifier que le fichier existe et n'est pas vide
+          if [ ! -s ios/Runner/GoogleService-Info.plist ]; then
+            echo "❌ Le fichier ios/Runner/GoogleService-Info.plist est vide ou absent après décodage."
+            exit 1
+          fi
+
+          # Vérifier la validité du plist (syntax check)
+          plutil -lint ios/Runner/GoogleService-Info.plist || { echo "❌ plutil: plist invalide"; exit 1; }
+          echo "✅ Plist validé (plutil)"
+
+          # Optionnel : afficher quelques clés utiles pour debug (ne montre pas les secrets)
+          echo "---- Aperçu plist (quelques clés) ----"
+          /usr/libexec/PlistBuddy -c "Print :BUNDLE_ID" ios/Runner/GoogleService-Info.plist || true
+          /usr/libexec/PlistBuddy -c "Print :PROJECT_ID" ios/Runner/GoogleService-Info.plist || true
+          echo "--------------------------------------"
+
       - name: "📱 Configure for iPhone only"
         script: |
           set -e
@@ -40,15 +70,15 @@ workflows:
         script: |
           set -e
           cd ios
-          pod install
+          pod install --repo-update
           cd ..
 
       - name: "🔐 Appliquer les certificats et provisioning profiles"
         script: |
           set -e
           set -x
-          keychain list-certificates
-          xcode-project use-profiles --project ios/Runner.xcodeproj
+          keychain list-certificates || true
+          xcode-project use-profiles --project ios/Runner.xcodeproj || true
 
       - name: "🔍 Vérification de la configuration"
         script: |
@@ -59,7 +89,7 @@ workflows:
         script: |
           set -e
           set -x
-          BUILD_NUMBER=$(($(date +%s)))
+          BUILD_NUMBER=$(date +%s)
           
           flutter build ipa \
             --release \
